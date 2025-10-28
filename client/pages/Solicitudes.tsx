@@ -94,10 +94,10 @@ export default function Solicitudes() {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">
+            <h1 className="text-3xl md:text-4xl font-bold text-[#050A30] dark:text-white">
               Solicitudes Financieras
             </h1>
-            <p className="text-slate-600 dark:text-slate-400 mt-1">
+            <p className="text-[#173747] dark:text-slate-400 mt-1">
               Gestiona y da seguimiento a todas las solicitudes
             </p>
           </div>
@@ -165,25 +165,25 @@ export default function Solicitudes() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start gap-3 mb-2">
                       <div>
-                        <h3 className="font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors line-clamp-1">
+                        <h3 className="font-bold text-[#050A30] dark:text-white group-hover:text-primary transition-colors line-clamp-1">
                           {solicitud.title}
                         </h3>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">
+                        <p className="text-sm text-[#173747] dark:text-slate-400">
                           {solicitud.code} • {solicitud.ministryName}
                         </p>
                       </div>
                     </div>
-                    <p className="text-sm text-slate-500 dark:text-slate-400 line-clamp-1">
+                    <p className="text-sm text-[#173747] dark:text-slate-400 line-clamp-1">
                       {solicitud.description}
                     </p>
                   </div>
 
                   <div className="flex flex-col sm:flex-row sm:items-center gap-4 md:gap-6">
                     <div className="text-right">
-                      <p className="font-bold text-slate-900 dark:text-white">
+                      <p className="font-bold text-[#050A30] dark:text-white">
                         {formatCurrency(solicitud.totalAmount)}
                       </p>
-                      <p className="text-xs text-slate-600 dark:text-slate-400">
+                      <p className="text-xs text-[#173747] dark:text-slate-400">
                         {formatDate(solicitud.createdAt)}
                       </p>
                     </div>
