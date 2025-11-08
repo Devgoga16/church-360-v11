@@ -28,7 +28,7 @@ export function Header({ onToggleSidebar }: HeaderProps) {
             </div>
             <div className="hidden sm:flex flex-col">
               <h1 className="text-lg font-logo text-[#050A30] dark:text-white leading-tight">Iglesia 360</h1>
-              <span className="text-xs font-subheading text-[#173747] dark:text-slate-400">Gestión de Solicitudes</span>
+              <span className="text-xs font-subheading text-[#173747] dark:text-slate-400">IACYM - Comas</span>
             </div>
           </div>
         </div>
