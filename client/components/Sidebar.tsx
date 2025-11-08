@@ -83,7 +83,7 @@ export function Sidebar({ isOpen = true, onClose, isCollapsed = false }: Sidebar
               index === menuSections.length - 1 ? "pb-6" : "pb-6"
             )}>
               {!isCollapsed && (
-                <h3 className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                <h3 className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
                   {section.title}
                 </h3>
               )}
