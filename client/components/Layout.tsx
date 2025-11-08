@@ -8,12 +8,13 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   return (
     <div className="flex flex-col h-screen bg-white dark:bg-slate-950">
-      <Header onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
+      <Header onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)} />
       <div className="flex flex-1 overflow-hidden">
-        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} isCollapsed={sidebarCollapsed} />
         <main className="flex-1 overflow-auto">
           {children}
         </main>
