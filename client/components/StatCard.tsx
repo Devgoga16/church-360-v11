@@ -15,7 +15,7 @@ interface StatCardProps {
 export function StatCard({ title, value, icon, trend, className }: StatCardProps) {
   return (
     <div className={cn(
-      "bg-white dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800 p-4 shadow-sm hover:shadow-md transition-shadow duration-200",
+      "bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-4 shadow-sm hover:shadow-md transition-shadow duration-200",
       className
     )}>
       <div className="flex items-start justify-between gap-4">
