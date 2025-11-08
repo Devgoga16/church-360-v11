@@ -59,37 +59,35 @@ export default function Index() {
 
         {/* Stats Grid */}
         {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-pulse">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 animate-pulse">
             {[...Array(4)].map((_, i) => (
               <div
                 key={i}
-                className="bg-slate-200 dark:bg-slate-800 rounded-xl h-32"
+                className="bg-slate-200 dark:bg-slate-800 rounded-lg h-24"
               />
             ))}
           </div>
         ) : stats ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <StatCard
               title="Total de Solicitudes"
               value={stats.totalSolicitudes}
-              icon={<FileText className="h-8 w-8" />}
+              icon={<FileText className="h-6 w-6" />}
             />
             <StatCard
               title="Pendientes de Aprobación"
               value={stats.pendingSolicitudes}
-              icon={<TrendingUp className="h-8 w-8" />}
-              className="border-l-4 border-l-warning"
+              icon={<TrendingUp className="h-6 w-6" />}
             />
             <StatCard
               title="Aprobadas"
               value={stats.approvedSolicitudes}
-              icon={<FileText className="h-8 w-8" />}
-              className="border-l-4 border-l-success"
+              icon={<FileText className="h-6 w-6" />}
             />
             <StatCard
               title="Monto Total Solicitado"
               value={formatCurrency(stats.totalAmount)}
-              icon={<DollarSign className="h-8 w-8" />}
+              icon={<DollarSign className="h-6 w-6" />}
             />
           </div>
         ) : null}
