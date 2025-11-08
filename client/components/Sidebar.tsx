@@ -51,7 +51,7 @@ const menuSections: MenuSection[] = [
   },
 ];
 
-export function Sidebar({ isOpen = true, onClose, isCollapsed = false }: SidebarProps) {
+export function Sidebar({ isOpen = true, onClose, isCollapsed = false, onToggleCollapse }: SidebarProps) {
   const location = useLocation();
 
   const isActive = (href: string) => location.pathname === href;
