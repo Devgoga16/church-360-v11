@@ -73,11 +73,15 @@ export function Sidebar({ isOpen = true, onClose, isCollapsed = false }: Sidebar
         )}
       >
         <nav className={cn(
-          "flex-1 py-6 space-y-6 overflow-y-auto",
+          "flex-1 overflow-y-auto",
           isCollapsed ? "px-2" : "px-3"
         )}>
-          {menuSections.map((section) => (
-            <div key={section.title}>
+          {menuSections.map((section, index) => (
+            <div key={section.title} className={cn(
+              "border-t border-b border-slate-200 dark:border-slate-700",
+              index === 0 ? "pt-6" : "pt-6",
+              index === menuSections.length - 1 ? "pb-6" : "pb-6"
+            )}>
               {!isCollapsed && (
                 <h3 className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   {section.title}
