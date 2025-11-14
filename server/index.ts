@@ -10,6 +10,10 @@ import {
   deleteUser,
 } from "./routes/users";
 import {
+  listMinistries,
+  getMinistry,
+} from "./routes/ministries";
+import {
   listSolicitudes,
   getSolicitud,
   createSolicitud,
@@ -51,6 +55,13 @@ export function createServer() {
   app.post("/api/users", createUser);
   app.put("/api/users/:id", updateUser);
   app.delete("/api/users/:id", deleteUser);
+
+  // ============================================================================
+  // MINISTRIES ROUTES
+  // ============================================================================
+
+  app.get("/api/ministries", listMinistries);
+  app.get("/api/ministries/:id", getMinistry);
 
   // ============================================================================
   // SOLICITUDES (FINANCIAL REQUESTS) ROUTES
