@@ -374,7 +374,7 @@ export default function NuevaSolicitud() {
               </Button>
             </div>
 
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto max-h-96 overflow-y-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-slate-200 dark:border-slate-800">
@@ -384,17 +384,10 @@ export default function NuevaSolicitud() {
                     <th className="text-left py-3 px-2 font-semibold text-slate-700 dark:text-slate-300">
                       Descripción
                     </th>
-                    <th className="text-left py-3 px-2 font-semibold text-slate-700 dark:text-slate-300 w-24">
-                      Cantidad
-                    </th>
-                    <th className="text-left py-3 px-2 font-semibold text-slate-700 dark:text-slate-300 w-28">
-                      Precio Unitario
-                    </th>
                     <th className="text-left py-3 px-2 font-semibold text-slate-700 dark:text-slate-300 w-28">
                       Monto
                     </th>
                     <th className="text-center py-3 px-2 font-semibold text-slate-700 dark:text-slate-300 w-10">
-                      Acción
                     </th>
                   </tr>
                 </thead>
@@ -415,32 +408,6 @@ export default function NuevaSolicitud() {
                             handleItemChange(index, "description", e.target.value)
                           }
                           className="w-full text-sm"
-                        />
-                      </td>
-                      <td className="py-3 px-2">
-                        <Input
-                          type="number"
-                          placeholder="Cantidad"
-                          value={item.quantity || ""}
-                          onChange={(e) =>
-                            handleItemChange(index, "quantity", parseFloat(e.target.value) || 0)
-                          }
-                          className="w-full text-sm"
-                          min="0"
-                          step="0.1"
-                        />
-                      </td>
-                      <td className="py-3 px-2">
-                        <Input
-                          type="number"
-                          placeholder="Precio"
-                          value={item.unitPrice || ""}
-                          onChange={(e) =>
-                            handleItemChange(index, "unitPrice", parseFloat(e.target.value) || 0)
-                          }
-                          className="w-full text-sm"
-                          min="0"
-                          step="0.01"
                         />
                       </td>
                       <td className="py-3 px-2">
