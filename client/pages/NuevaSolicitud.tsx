@@ -209,6 +209,15 @@ export default function NuevaSolicitud() {
       return;
     }
 
+    if (paymentType === PaymentType.UNO_MISMO && !selectedAccountId) {
+      toast({
+        title: "Error",
+        description: "Debe seleccionar una cuenta",
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (paymentType === PaymentType.TERCEROS && !paymentDetail.trim()) {
       toast({
         title: "Error",
