@@ -67,6 +67,28 @@ export default function SolicitudDetalle() {
     });
   };
 
+  const getWorkflowStepLabel = (step: WorkflowStep): string => {
+    const labels: Record<WorkflowStep, string> = {
+      [WorkflowStep.APROBADO_PASTOR_RED]: "Aprobado por Pastor de red",
+      [WorkflowStep.APROBADO_ADMINISTRACION]:
+        "Aprobado por administración",
+      [WorkflowStep.APROBADO_PR_TITULAR]: "Aprobado por PR titular",
+      [WorkflowStep.ENTREGA_DINERO]: "Entrega de dinero",
+      [WorkflowStep.SUBIR_COMPROBANTE]: "Subir comprobante",
+    };
+    return labels[step];
+  };
+
+  const getProofOfPaymentStatusLabel = (status: ProofOfPaymentStatus): string => {
+    const labels: Record<ProofOfPaymentStatus, string> = {
+      [ProofOfPaymentStatus.SUBIDO]: "Subido",
+      [ProofOfPaymentStatus.PENDIENTE_VALIDAR]: "Comprobante por validar",
+      [ProofOfPaymentStatus.VALIDADO]: "Validado",
+      [ProofOfPaymentStatus.ERROR]: "Error",
+    };
+    return labels[status];
+  };
+
   if (loading) {
     return (
       <Layout>
