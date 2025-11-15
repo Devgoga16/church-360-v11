@@ -225,13 +225,17 @@ export default function NuevaSolicitud() {
       return;
     }
 
-    if (paymentType === PaymentType.TERCEROS && !paymentDetail.trim()) {
-      toast({
-        title: "Error",
-        description: "Debe especificar los detalles del abono a terceros",
-        variant: "destructive",
-      });
-      return;
+    if (paymentType === PaymentType.TERCEROS) {
+      if (!thirdPartyData.bankName.trim() || !thirdPartyData.accountNumber.trim() ||
+          !thirdPartyData.documentType.trim() || !thirdPartyData.document.trim() ||
+          !thirdPartyData.cci.trim()) {
+        toast({
+          title: "Error",
+          description: "Debe completar todos los campos del abono a terceros",
+          variant: "destructive",
+        });
+        return;
+      }
     }
 
     if (items.some(item => !item.description.trim() || item.amount <= 0)) {
