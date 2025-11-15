@@ -161,6 +161,65 @@ export default function SolicitudDetalle() {
           </p>
         </div>
 
+        {/* Workflow Timeline */}
+        {solicitud.workflowSteps && solicitud.workflowSteps.length > 0 && (
+          <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-6 space-y-4">
+            <h2 className="text-lg font-semibold text-[#050A30] dark:text-white flex items-center gap-2">
+              <Clock className="h-5 w-5" />
+              Línea de tiempo
+            </h2>
+
+            <div className="relative space-y-6">
+              {solicitud.workflowSteps.map((step, index) => (
+                <div key={step.step || index} className="flex gap-4">
+                  {/* Timeline Line */}
+                  <div className="flex flex-col items-center">
+                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-green-600 dark:bg-green-500 border-4 border-white dark:border-slate-950 text-white">
+                      <CheckCircle className="h-5 w-5" />
+                    </div>
+                    {index < solicitud.workflowSteps.length - 1 && (
+                      <div className="w-1 bg-green-200 dark:bg-green-900/30 flex-grow my-2 min-h-16" />
+                    )}
+                  </div>
+
+                  {/* Step Content */}
+                  <div className="flex-1 pt-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                      <div>
+                        <h3 className="font-semibold text-[#050A30] dark:text-white">
+                          {getWorkflowStepLabel(step.step)}
+                        </h3>
+                        {step.completedBy && (
+                          <p className="text-sm text-slate-600 dark:text-slate-400">
+                            Por {step.completedByName}
+                          </p>
+                        )}
+                      </div>
+                      {step.completedAt && (
+                        <span className="text-xs text-slate-500 dark:text-slate-400 whitespace-nowrap">
+                          {formatDate(step.completedAt)}
+                        </span>
+                      )}
+                    </div>
+
+                    {step.proofOfPaymentStatus && (
+                      <div className="mt-3 inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
+                        {getProofOfPaymentStatusLabel(step.proofOfPaymentStatus)}
+                      </div>
+                    )}
+
+                    {step.comment && (
+                      <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+                        {step.comment}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Información del Solicitante */}
         <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-6 space-y-4">
           <h2 className="text-lg font-semibold text-[#050A30] dark:text-white">
