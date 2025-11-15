@@ -251,15 +251,6 @@ export default function NuevaSolicitud() {
   return (
     <Layout>
       <div className="p-6 md:p-8">
-        <div className="space-y-2 mb-8">
-          <h1 className="text-3xl font-bold text-[#050A30] dark:text-white">
-            Nueva Solicitud Financiera
-          </h1>
-          <p className="text-slate-600 dark:text-slate-400">
-            Complete el formulario para crear una nueva solicitud
-          </p>
-        </div>
-
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Información del Solicitante */}
           <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-6 space-y-4">
@@ -333,48 +324,35 @@ export default function NuevaSolicitud() {
               Detalles de la Solicitud
             </h2>
 
-            {/* Título */}
-            <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                Título *
-              </label>
-              <Input
-                type="text"
-                placeholder="Ej: Equipos de sonido para alabanza"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="w-full"
-              />
-            </div>
+            {/* Descripción General y Moneda */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                  Descripción General *
+                </label>
+                <Textarea
+                  placeholder="Describe los detalles de la solicitud..."
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="w-full h-10"
+                />
+              </div>
 
-            {/* Descripción General */}
-            <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                Descripción General *
-              </label>
-              <Textarea
-                placeholder="Describe los detalles de la solicitud..."
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="w-full min-h-[120px]"
-              />
-            </div>
-
-            {/* Moneda */}
-            <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                Moneda
-              </label>
-              <Select value={currency} onValueChange={setCurrency}>
-                <SelectTrigger className="w-full">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="PEN">Soles (S/)</SelectItem>
-                  <SelectItem value="USD">Dólares (US$)</SelectItem>
-                  <SelectItem value="EUR">Euros (€)</SelectItem>
-                </SelectContent>
-              </Select>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                  Moneda
+                </label>
+                <Select value={currency} onValueChange={setCurrency}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="PEN">Soles (S/)</SelectItem>
+                    <SelectItem value="USD">Dólares (US$)</SelectItem>
+                    <SelectItem value="EUR">Euros (€)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </div>
 
