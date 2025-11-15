@@ -181,6 +181,7 @@ export interface Solicitud {
   items: SolicitudItem[];
   attachments: SolicitudAttachment[];
   approvals: ApprovalInfo[];
+  workflowSteps?: WorkflowStepRecord[];
   createdAt: string;
   updatedAt: string;
   submittedAt?: string;
