@@ -105,6 +105,20 @@ export default function NuevaSolicitud() {
     fetchData();
   }, [toast]);
 
+  const handleSelectAccount = (accountId: string) => {
+    setSelectedAccountId(accountId);
+    const account = mockAccounts.find((acc) => acc.id === accountId);
+    if (account) {
+      setAccountData({
+        bankName: account.bankName,
+        accountNumber: account.accountNumber,
+        documentType: account.documentType,
+        document: account.document,
+        cci: account.cci,
+      });
+    }
+  };
+
   const handleAddItem = () => {
     const newItemNumber = items.length + 1;
     setItems([
