@@ -286,39 +286,6 @@ export default function SolicitudDetalle() {
               <StatusBadge status={solicitud.status} />
             </div>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-200 dark:border-slate-800">
-            <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                Fecha de Creación
-              </label>
-              <div className="text-[#050A30] dark:text-white">
-                {formatDate(solicitud.createdAt)}
-              </div>
-            </div>
-
-            {solicitud.submittedAt && (
-              <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                  Fecha de Envío
-                </label>
-                <div className="text-[#050A30] dark:text-white">
-                  {formatDate(solicitud.submittedAt)}
-                </div>
-              </div>
-            )}
-
-            {solicitud.completedAt && (
-              <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                  Fecha de Completado
-                </label>
-                <div className="text-[#050A30] dark:text-white">
-                  {formatDate(solicitud.completedAt)}
-                </div>
-              </div>
-            )}
-          </div>
         </div>
 
         {/* Items Table */}
