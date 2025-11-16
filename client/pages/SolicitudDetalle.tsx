@@ -247,7 +247,7 @@ export default function SolicitudDetalle() {
               <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                 Ministerio o Área
               </label>
-              <div className="text-[#050A30] dark:text-white font-medium">
+              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 bg-slate-50 dark:bg-slate-900/30 text-[#050A30] dark:text-white font-medium">
                 {solicitud.ministryName}
               </div>
             </div>
@@ -256,7 +256,7 @@ export default function SolicitudDetalle() {
               <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                 Encargado de Área
               </label>
-              <div className="text-[#050A30] dark:text-white font-medium">
+              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 bg-slate-50 dark:bg-slate-900/30 text-[#050A30] dark:text-white font-medium">
                 {solicitud.responsibleName || "No asignado"}
               </div>
             </div>
@@ -265,7 +265,7 @@ export default function SolicitudDetalle() {
               <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                 Solicitante
               </label>
-              <div className="text-[#050A30] dark:text-white font-medium">
+              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 bg-slate-50 dark:bg-slate-900/30 text-[#050A30] dark:text-white font-medium">
                 {solicitud.requesterName}
               </div>
             </div>
