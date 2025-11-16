@@ -399,26 +399,88 @@ export default function SolicitudDetalle() {
             Detalle del Abono
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-3">
+            {/* Payment Type Selection */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
                 Tipo de Abono
               </label>
-              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 bg-slate-50 dark:bg-slate-900/30">
-                <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">
-                  {solicitud.paymentType === PaymentType.UNO_MISMO
-                    ? "A Cuenta Propia"
-                    : "A Terceros"}
-                </span>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  disabled
+                  className={`py-3 px-4 rounded-lg border-2 font-medium transition-all text-sm ${
+                    solicitud.paymentType === PaymentType.UNO_MISMO
+                      ? "border-[#042D62] bg-[#042D62]/10 text-[#042D62] dark:bg-[#042D62]/20"
+                      : "border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300"
+                  }`}
+                >
+                  <div className="flex items-center justify-center gap-2">
+                    <svg
+                      className="h-4 w-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    A Cuenta Propia
+                  </div>
+                </button>
+                <button
+                  disabled
+                  className={`py-3 px-4 rounded-lg border-2 font-medium transition-all text-sm ${
+                    solicitud.paymentType === PaymentType.TERCEROS
+                      ? "border-[#042D62] bg-[#042D62]/10 text-[#042D62] dark:bg-[#042D62]/20"
+                      : "border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300"
+                  }`}
+                >
+                  <div className="flex items-center justify-center gap-2">
+                    <svg
+                      className="h-4 w-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    A Terceros
+                  </div>
+                </button>
               </div>
             </div>
-          </div>
 
-          {solicitud.paymentDetail && (
-            <div className="p-4 bg-slate-50 dark:bg-slate-900/30 rounded-lg border border-slate-200 dark:border-slate-800 whitespace-pre-wrap text-sm text-slate-700 dark:text-slate-300 font-mono">
-              {solicitud.paymentDetail}
-            </div>
-          )}
+            {/* Payment Detail Display */}
+            {solicitud.paymentDetail && (
+              <div className="p-4 bg-slate-50 dark:bg-slate-900/30 rounded-lg border border-slate-200 dark:border-slate-800">
+                <div className="space-y-3 text-sm">
+                  {solicitud.paymentDetail.split("\n").map((line, idx) => {
+                    if (!line.trim()) return null;
+                    const [label, ...value] = line.split(": ");
+                    return (
+                      <div key={idx}>
+                        <p className="text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">
+                          {label.trim()}
+                        </p>
+                        <p className="text-slate-700 dark:text-slate-300 font-medium">
+                          {value.join(": ").trim()}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Approvals */}
