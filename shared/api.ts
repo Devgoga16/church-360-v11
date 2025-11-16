@@ -43,6 +43,21 @@ export enum DocumentType {
   OTRO = 'otro',
 }
 
+export enum WorkflowStep {
+  APROBADO_PASTOR_RED = 'aprobado_pastor_red',
+  APROBADO_ADMINISTRACION = 'aprobado_administracion',
+  APROBADO_PR_TITULAR = 'aprobado_pr_titular',
+  ENTREGA_DINERO = 'entrega_dinero',
+  SUBIR_COMPROBANTE = 'subir_comprobante',
+}
+
+export enum ProofOfPaymentStatus {
+  SUBIDO = 'subido',
+  PENDIENTE_VALIDAR = 'pendiente_validar',
+  VALIDADO = 'validado',
+  ERROR = 'error',
+}
+
 // ============================================================================
 // USER TYPES
 // ============================================================================
@@ -136,6 +151,15 @@ export interface SolicitudAttachment {
   uploadedAt: string;
 }
 
+export interface WorkflowStepRecord {
+  step: WorkflowStep;
+  completedAt?: string;
+  completedBy?: number;
+  completedByName?: string;
+  proofOfPaymentStatus?: ProofOfPaymentStatus;
+  comment?: string;
+}
+
 export interface Solicitud {
   id: number;
   code: string;
@@ -157,6 +181,7 @@ export interface Solicitud {
   items: SolicitudItem[];
   attachments: SolicitudAttachment[];
   approvals: ApprovalInfo[];
+  workflowSteps?: WorkflowStepRecord[];
   createdAt: string;
   updatedAt: string;
   submittedAt?: string;

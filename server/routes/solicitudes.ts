@@ -9,6 +9,8 @@ import {
   ApiResponse,
   PaginatedResponse,
   AuditLog,
+  WorkflowStep,
+  ProofOfPaymentStatus,
 } from "@shared/api";
 
 // Mock data for solicitudes
@@ -394,6 +396,44 @@ const mockSolicitudes: Solicitud[] = [
         approvalDate: new Date(Date.now() - 259200000).toISOString(),
         createdAt: new Date().toISOString(),
         updatedAt: new Date(Date.now() - 259200000).toISOString(),
+      },
+    ],
+    workflowSteps: [
+      {
+        step: WorkflowStep.APROBADO_PASTOR_RED,
+        completedAt: new Date(Date.now() - 286200000).toISOString(),
+        completedBy: 4,
+        completedByName: "Ana Martínez",
+        comment: "Aprobado por pastor de red",
+      },
+      {
+        step: WorkflowStep.APROBADO_ADMINISTRACION,
+        completedAt: new Date(Date.now() - 259200000).toISOString(),
+        completedBy: 2,
+        completedByName: "María López",
+        comment: "Aprobado por administración",
+      },
+      {
+        step: WorkflowStep.APROBADO_PR_TITULAR,
+        completedAt: new Date(Date.now() - 230400000).toISOString(),
+        completedBy: 3,
+        completedByName: "Carlos Rodríguez",
+        comment: "Aprobado por pastor general",
+      },
+      {
+        step: WorkflowStep.ENTREGA_DINERO,
+        completedAt: new Date(Date.now() - 201600000).toISOString(),
+        completedBy: 2,
+        completedByName: "María López",
+        comment: "Dinero entregado",
+      },
+      {
+        step: WorkflowStep.SUBIR_COMPROBANTE,
+        completedAt: new Date(Date.now() - 172800000).toISOString(),
+        completedBy: 5,
+        completedByName: "Pedro Sánchez",
+        proofOfPaymentStatus: ProofOfPaymentStatus.VALIDADO,
+        comment: "Comprobante de pago validado",
       },
     ],
     submittedAt: new Date(Date.now() - 345600000).toISOString(),
