@@ -306,13 +306,11 @@ export default function SolicitudDetalle() {
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Items Table */}
-        <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-6 space-y-4">
-          <h2 className="text-lg font-semibold text-[#050A30] dark:text-white">
-            Detalles de Items
-          </h2>
+          <div className="border-t border-slate-200 dark:border-slate-800 pt-6">
+            <h3 className="text-lg font-semibold text-[#050A30] dark:text-white mb-4">
+              Detalles de Items
+            </h3>
 
           {solicitud.items.length > 0 ? (
             <div className="overflow-x-auto">
@@ -391,6 +389,7 @@ export default function SolicitudDetalle() {
                 {formatCurrency(solicitud.totalAmount, solicitud.currency)}
               </span>
             </div>
+          </div>
           </div>
         </div>
 
