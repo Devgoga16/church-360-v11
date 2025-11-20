@@ -317,16 +317,16 @@ export default function SolicitudDetalle() {
 
             {solicitud.items.length > 0 ? (
               <div className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="w-full text-xs md:text-sm">
                   <thead>
                     <tr className="border-b border-slate-200 dark:border-slate-800">
-                      <th className="text-left py-3 px-2 font-semibold text-slate-700 dark:text-slate-300 w-12">
+                      <th className="text-left py-2 px-2 font-semibold text-slate-700 dark:text-slate-300 w-8">
                         #
                       </th>
-                      <th className="text-left py-3 px-2 font-semibold text-slate-700 dark:text-slate-300">
+                      <th className="text-left py-2 px-2 font-semibold text-slate-700 dark:text-slate-300">
                         Descripción
                       </th>
-                      <th className="text-left py-3 px-2 font-semibold text-slate-700 dark:text-slate-300 w-28">
+                      <th className="text-left py-2 px-2 font-semibold text-slate-700 dark:text-slate-300 w-24">
                         Monto
                       </th>
                     </tr>
@@ -337,17 +337,17 @@ export default function SolicitudDetalle() {
                         key={item.id || item.itemNumber || index}
                         className="hover:bg-slate-50/50 dark:hover:bg-slate-900/30"
                       >
-                        <td className="py-3 px-2">
+                        <td className="py-2 px-2">
                           <span className="text-slate-700 dark:text-slate-300">
                             {item.itemNumber}
                           </span>
                         </td>
-                        <td className="py-3 px-2">
+                        <td className="py-2 px-2">
                           <span className="text-slate-700 dark:text-slate-300">
                             {item.description}
                           </span>
                         </td>
-                        <td className="py-3 px-2">
+                        <td className="py-2 px-2">
                           <span className="font-semibold text-[#050A30] dark:text-white">
                             {formatCurrency(item.amount, solicitud.currency)}
                           </span>
