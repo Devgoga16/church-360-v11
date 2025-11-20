@@ -359,8 +359,8 @@ export default function NuevaSolicitud() {
 
   return (
     <Layout>
-      <div className="p-6 md:p-8">
-        <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="p-4 md:p-6">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {/* Información del Solicitante */}
           <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-6 space-y-4">
             <h2 className="text-lg font-semibold text-[#050A30] dark:text-white">
