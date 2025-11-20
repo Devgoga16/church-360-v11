@@ -131,9 +131,9 @@ export default function Solicitudes() {
             </div>
             <Link
               to="/solicitudes/nueva"
-              className="inline-flex items-center justify-center gap-2 bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors shadow-lg hover:shadow-xl"
+              className="inline-flex items-center justify-center gap-2 bg-primary text-white px-4 py-2 rounded-lg font-medium text-sm hover:bg-primary/90 transition-colors shadow-md hover:shadow-lg"
             >
-              <Plus className="h-5 w-5" />
+              <Plus className="h-4 w-4" />
               Nueva Solicitud
             </Link>
           </div>
