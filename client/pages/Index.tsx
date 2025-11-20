@@ -65,7 +65,7 @@ export default function Index() {
 
         {/* Stats Grid */}
         {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 animate-pulse">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 animate-pulse">
             {[...Array(4)].map((_, i) => (
               <div
                 key={i}
