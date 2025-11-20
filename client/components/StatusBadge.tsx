@@ -43,7 +43,7 @@ const statusConfig: Record<
   cancelado: {
     label: "Cancelado",
     className:
-      "inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wide bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300",
+      "inline-flex items-center px-2 py-1 rounded text-xs font-semibold uppercase tracking-wide bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300",
   },
 };
 
