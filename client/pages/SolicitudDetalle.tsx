@@ -364,12 +364,12 @@ export default function SolicitudDetalle() {
             )}
 
             {/* Total */}
-            <div className="flex justify-end pt-4 border-t border-slate-200 dark:border-slate-800">
-              <div className="flex items-center gap-4">
-                <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+            <div className="flex justify-end pt-3 border-t border-slate-200 dark:border-slate-800">
+              <div className="flex items-center gap-3">
+                <span className="text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300">
                   Total:
                 </span>
-                <span className="text-2xl font-bold text-[#050A30] dark:text-white">
+                <span className="text-lg md:text-xl font-bold text-[#050A30] dark:text-white">
                   {formatCurrency(solicitud.totalAmount, solicitud.currency)}
                 </span>
               </div>
