@@ -362,12 +362,12 @@ export default function NuevaSolicitud() {
       <div className="p-4 md:p-6">
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Información del Solicitante */}
-          <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-6 space-y-4">
-            <h2 className="text-lg font-semibold text-[#050A30] dark:text-white">
+          <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-3">
+            <h2 className="text-base font-semibold text-[#050A30] dark:text-white">
               Información del Solicitante
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {/* Ministerio */}
               <div>
                 <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
