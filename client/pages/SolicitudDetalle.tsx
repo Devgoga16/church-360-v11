@@ -131,7 +131,7 @@ export default function SolicitudDetalle() {
 
   return (
     <Layout>
-      <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-6">
+      <div className="p-4 md:p-6 max-w-7xl mx-auto space-y-4">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <Button
@@ -146,13 +146,13 @@ export default function SolicitudDetalle() {
         </div>
 
         {/* Title Section */}
-        <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-6 space-y-2">
-          <div className="flex items-start justify-between gap-4">
+        <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-2">
+          <div className="flex items-start justify-between gap-3">
             <div className="flex-1 min-w-0">
-              <h1 className="text-2xl md:text-3xl font-bold text-[#050A30] dark:text-white break-words">
+              <h1 className="text-lg md:text-xl font-bold text-[#050A30] dark:text-white break-words">
                 {solicitud.description}
               </h1>
-              <p className="text-[#173747] dark:text-slate-400 mt-2">
+              <p className="text-xs md:text-sm text-[#173747] dark:text-slate-400 mt-1">
                 {solicitud.code} • {solicitud.ministryName}
               </p>
             </div>
@@ -249,35 +249,35 @@ export default function SolicitudDetalle() {
         )}
 
         {/* Información del Solicitante */}
-        <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-6 space-y-4">
-          <h2 className="text-lg font-semibold text-[#050A30] dark:text-white">
+        <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-3">
+          <h2 className="text-base font-semibold text-[#050A30] dark:text-white">
             Información del Solicitante
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              <label className="block text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                 Ministerio o Área
               </label>
-              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 bg-slate-50 dark:bg-slate-900/30 text-[#050A30] dark:text-white font-medium">
+              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-900/30 text-xs md:text-sm text-[#050A30] dark:text-white font-medium">
                 {solicitud.ministryName}
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              <label className="block text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                 Encargado de Área
               </label>
-              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 bg-slate-50 dark:bg-slate-900/30 text-[#050A30] dark:text-white font-medium">
+              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-900/30 text-xs md:text-sm text-[#050A30] dark:text-white font-medium">
                 {solicitud.responsibleName || "No asignado"}
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              <label className="block text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                 Solicitante
               </label>
-              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 bg-slate-50 dark:bg-slate-900/30 text-[#050A30] dark:text-white font-medium">
+              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-900/30 text-xs md:text-sm text-[#050A30] dark:text-white font-medium">
                 {solicitud.requesterName}
               </div>
             </div>
@@ -285,63 +285,48 @@ export default function SolicitudDetalle() {
         </div>
 
         {/* Detalles de la Solicitud */}
-        <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-6 space-y-4">
-          <h2 className="text-lg font-semibold text-[#050A30] dark:text-white">
+        <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-3">
+          <h2 className="text-base font-semibold text-[#050A30] dark:text-white">
             Detalles de la Solicitud
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div className="md:col-span-2">
+              <label className="block text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                Descripción General
+              </label>
+              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-900/30 text-xs md:text-sm text-[#050A30] dark:text-white font-medium">
+                {solicitud.description}
+              </div>
+            </div>
+
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              <label className="block text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                 Moneda
               </label>
-              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 bg-slate-50 dark:bg-slate-900/30 text-[#050A30] dark:text-white font-medium">
+              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-900/30 text-xs md:text-sm text-[#050A30] dark:text-white font-medium">
                 {solicitud.currency}
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                Monto Total
-              </label>
-              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 bg-slate-50 dark:bg-slate-900/30 text-2xl font-bold text-[#042D62] dark:text-white">
-                {formatCurrency(solicitud.totalAmount, solicitud.currency)}
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                Estado
-              </label>
-              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 bg-slate-50 dark:bg-slate-900/30 inline-block">
-                <StatusBadge status={solicitud.status} />
               </div>
             </div>
           </div>
 
-          <div className="border-t border-slate-200 dark:border-slate-800 pt-6">
-            <h3 className="text-lg font-semibold text-[#050A30] dark:text-white mb-4">
+          <div className="border-t border-slate-200 dark:border-slate-800 pt-4">
+            <h3 className="text-base font-semibold text-[#050A30] dark:text-white mb-3">
               Detalles de Items
             </h3>
 
             {solicitud.items.length > 0 ? (
               <div className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="w-full text-xs md:text-sm">
                   <thead>
                     <tr className="border-b border-slate-200 dark:border-slate-800">
-                      <th className="text-left py-3 px-2 font-semibold text-slate-700 dark:text-slate-300 w-12">
+                      <th className="text-left py-2 px-2 font-semibold text-slate-700 dark:text-slate-300 w-8">
                         #
                       </th>
-                      <th className="text-left py-3 px-2 font-semibold text-slate-700 dark:text-slate-300">
+                      <th className="text-left py-2 px-2 font-semibold text-slate-700 dark:text-slate-300">
                         Descripción
                       </th>
-                      <th className="text-right py-3 px-2 font-semibold text-slate-700 dark:text-slate-300 w-32">
-                        Cantidad
-                      </th>
-                      <th className="text-right py-3 px-2 font-semibold text-slate-700 dark:text-slate-300 w-32">
-                        Precio Unitario
-                      </th>
-                      <th className="text-right py-3 px-2 font-semibold text-slate-700 dark:text-slate-300 w-32">
+                      <th className="text-left py-2 px-2 font-semibold text-slate-700 dark:text-slate-300 w-24">
                         Monto
                       </th>
                     </tr>
@@ -352,30 +337,17 @@ export default function SolicitudDetalle() {
                         key={item.id || item.itemNumber || index}
                         className="hover:bg-slate-50/50 dark:hover:bg-slate-900/30"
                       >
-                        <td className="py-3 px-2">
+                        <td className="py-2 px-2">
                           <span className="text-slate-700 dark:text-slate-300">
                             {item.itemNumber}
                           </span>
                         </td>
-                        <td className="py-3 px-2">
+                        <td className="py-2 px-2">
                           <span className="text-slate-700 dark:text-slate-300">
                             {item.description}
                           </span>
                         </td>
-                        <td className="py-3 px-2 text-right">
-                          <span className="text-slate-700 dark:text-slate-300">
-                            {item.quantity || 1}
-                          </span>
-                        </td>
-                        <td className="py-3 px-2 text-right">
-                          <span className="text-slate-700 dark:text-slate-300">
-                            {formatCurrency(
-                              item.unitPrice || 0,
-                              solicitud.currency,
-                            )}
-                          </span>
-                        </td>
-                        <td className="py-3 px-2 text-right">
+                        <td className="py-2 px-2">
                           <span className="font-semibold text-[#050A30] dark:text-white">
                             {formatCurrency(item.amount, solicitud.currency)}
                           </span>
@@ -392,12 +364,12 @@ export default function SolicitudDetalle() {
             )}
 
             {/* Total */}
-            <div className="flex justify-end pt-4 border-t border-slate-200 dark:border-slate-800">
-              <div className="flex items-center gap-4">
-                <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+            <div className="flex justify-end pt-3 border-t border-slate-200 dark:border-slate-800">
+              <div className="flex items-center gap-3">
+                <span className="text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300">
                   Total:
                 </span>
-                <span className="text-2xl font-bold text-[#050A30] dark:text-white">
+                <span className="text-lg md:text-xl font-bold text-[#050A30] dark:text-white">
                   {formatCurrency(solicitud.totalAmount, solicitud.currency)}
                 </span>
               </div>
@@ -406,8 +378,8 @@ export default function SolicitudDetalle() {
         </div>
 
         {/* Detalle del Abono */}
-        <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-6 space-y-4">
-          <h2 className="text-lg font-semibold text-[#050A30] dark:text-white">
+        <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-3">
+          <h2 className="text-base font-semibold text-[#050A30] dark:text-white">
             Detalle del Abono
           </h2>
 
@@ -497,8 +469,8 @@ export default function SolicitudDetalle() {
 
         {/* Approvals */}
         {solicitud.approvals && solicitud.approvals.length > 0 && (
-          <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-6 space-y-4">
-            <h2 className="text-lg font-semibold text-[#050A30] dark:text-white">
+          <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-3">
+            <h2 className="text-base font-semibold text-[#050A30] dark:text-white">
               Aprobaciones
             </h2>
 
