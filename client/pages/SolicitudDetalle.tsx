@@ -249,35 +249,35 @@ export default function SolicitudDetalle() {
         )}
 
         {/* Información del Solicitante */}
-        <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-6 space-y-4">
-          <h2 className="text-lg font-semibold text-[#050A30] dark:text-white">
+        <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-3">
+          <h2 className="text-base font-semibold text-[#050A30] dark:text-white">
             Información del Solicitante
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              <label className="block text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                 Ministerio o Área
               </label>
-              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 bg-slate-50 dark:bg-slate-900/30 text-[#050A30] dark:text-white font-medium">
+              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-900/30 text-xs md:text-sm text-[#050A30] dark:text-white font-medium">
                 {solicitud.ministryName}
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              <label className="block text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                 Encargado de Área
               </label>
-              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 bg-slate-50 dark:bg-slate-900/30 text-[#050A30] dark:text-white font-medium">
+              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-900/30 text-xs md:text-sm text-[#050A30] dark:text-white font-medium">
                 {solicitud.responsibleName || "No asignado"}
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              <label className="block text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                 Solicitante
               </label>
-              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 bg-slate-50 dark:bg-slate-900/30 text-[#050A30] dark:text-white font-medium">
+              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-900/30 text-xs md:text-sm text-[#050A30] dark:text-white font-medium">
                 {solicitud.requesterName}
               </div>
             </div>
@@ -285,33 +285,33 @@ export default function SolicitudDetalle() {
         </div>
 
         {/* Detalles de la Solicitud */}
-        <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-6 space-y-4">
-          <h2 className="text-lg font-semibold text-[#050A30] dark:text-white">
+        <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-3">
+          <h2 className="text-base font-semibold text-[#050A30] dark:text-white">
             Detalles de la Solicitud
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              <label className="block text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                 Descripción General
               </label>
-              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 bg-slate-50 dark:bg-slate-900/30 text-[#050A30] dark:text-white font-medium">
+              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-900/30 text-xs md:text-sm text-[#050A30] dark:text-white font-medium">
                 {solicitud.description}
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              <label className="block text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                 Moneda
               </label>
-              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 bg-slate-50 dark:bg-slate-900/30 text-[#050A30] dark:text-white font-medium">
+              <div className="border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-900/30 text-xs md:text-sm text-[#050A30] dark:text-white font-medium">
                 {solicitud.currency}
               </div>
             </div>
           </div>
 
-          <div className="border-t border-slate-200 dark:border-slate-800 pt-6">
-            <h3 className="text-lg font-semibold text-[#050A30] dark:text-white mb-4">
+          <div className="border-t border-slate-200 dark:border-slate-800 pt-4">
+            <h3 className="text-base font-semibold text-[#050A30] dark:text-white mb-3">
               Detalles de Items
             </h3>
 
