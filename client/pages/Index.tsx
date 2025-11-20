@@ -151,22 +151,22 @@ export default function Index() {
           <div className="border-t border-slate-200 dark:border-slate-800"></div>
 
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full text-xs md:text-sm">
               <thead>
                 <tr className="border-b border-slate-200 dark:border-slate-800">
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  <th className="px-3 py-2 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                     Código
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  <th className="px-3 py-2 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                     Título
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  <th className="px-3 py-2 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                     Monto
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  <th className="px-3 py-2 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                     Estado
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  <th className="px-3 py-2 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                     Fecha
                   </th>
                 </tr>
@@ -178,28 +178,28 @@ export default function Index() {
                       key={solicitud.id}
                       className="hover:bg-slate-50/50 dark:hover:bg-slate-900/30 transition-colors duration-150"
                     >
-                      <td className="px-6 py-4">
+                      <td className="px-3 py-2">
                         <Link
                           to={`/solicitudes/${solicitud.id}`}
-                          className="font-semibold text-[#042D62] hover:text-[#042D62]/80 transition-colors text-sm"
+                          className="font-semibold text-[#042D62] hover:text-[#042D62]/80 transition-colors text-xs md:text-sm"
                         >
                           {solicitud.code}
                         </Link>
                       </td>
-                      <td className="px-6 py-4">
-                        <span className="text-sm text-slate-700 dark:text-slate-300 line-clamp-1">
+                      <td className="px-3 py-2">
+                        <span className="text-xs md:text-sm text-slate-700 dark:text-slate-300 line-clamp-1">
                           {solicitud.title}
                         </span>
                       </td>
-                      <td className="px-6 py-4">
-                        <span className="font-semibold text-slate-900 dark:text-white text-sm">
+                      <td className="px-3 py-2">
+                        <span className="font-semibold text-slate-900 dark:text-white text-xs md:text-sm">
                           {formatCurrency(solicitud.totalAmount)}
                         </span>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-3 py-2">
                         <StatusBadge status={solicitud.status} />
                       </td>
-                      <td className="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">
+                      <td className="px-3 py-2 text-xs md:text-sm text-slate-500 dark:text-slate-400">
                         {new Date(solicitud.createdAt).toLocaleDateString(
                           "es-ES",
                         )}
