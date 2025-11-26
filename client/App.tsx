@@ -14,6 +14,7 @@ import Solicitudes from "./pages/Solicitudes";
 import NuevaSolicitud from "./pages/NuevaSolicitud";
 import SolicitudDetalle from "./pages/SolicitudDetalle";
 import Soporte from "./pages/Soporte";
+import Roles from "./pages/Configuracion/Roles";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -68,10 +69,10 @@ const App = () => (
               }
             />
             <Route
-              path="/configuracion"
+              path="/configuracion/roles"
               element={
                 <ProtectedRoute>
-                  <NotFound />
+                  <Roles />
                 </ProtectedRoute>
               }
             />
