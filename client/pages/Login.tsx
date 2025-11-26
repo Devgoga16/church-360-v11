@@ -47,11 +47,11 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#26629c] to-[#1a4269] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#042d62] to-[#031d3d] flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="bg-white rounded-2xl shadow-2xl p-8">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-[#26629c] mb-2">
+            <h1 className="text-3xl font-bold text-[#042d62] mb-2">
               Iglesia 360
             </h1>
             <p className="text-slate-600">Gestión integral para tu iglesia</p>
@@ -98,7 +98,7 @@ export default function Login() {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-[#26629c] hover:bg-[#1a4269] text-white font-semibold py-2 transition-colors"
+              className="w-full bg-[#042d62] hover:bg-[#031d3d] text-white font-semibold py-2 transition-colors"
             >
               {isLoading ? "Iniciando sesión..." : "Iniciar Sesión"}
             </Button>
@@ -117,7 +117,7 @@ export default function Login() {
             <button
               onClick={() => quickLogin("admin", "admin123")}
               disabled={isLoading}
-              className="w-full p-3 border-2 border-slate-200 rounded-lg hover:border-[#26629c] hover:bg-[#26629c]/5 transition-all text-left"
+              className="w-full p-3 border-2 border-slate-200 rounded-lg hover:border-[#042d62] hover:bg-[#042d62]/5 transition-all text-left"
             >
               <div className="font-semibold text-slate-900">
                 Admin (2 roles)
