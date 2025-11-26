@@ -110,6 +110,7 @@ const roleStructure: RoleItem[] = [
   },
   {
     label: "Tesorero",
+    id: "tesorero",
     icon: DollarSign,
     modules: [
       {
