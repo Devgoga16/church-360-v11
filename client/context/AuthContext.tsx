@@ -105,7 +105,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(false);
   }, []);
 
-  const login = async (email: string, password: string) => {
+  const login = async (username: string, password: string) => {
     setIsLoading(true);
     try {
       const response = await fetch("https://iglesia360-api.unify-tec.com/api/auth/login", {
