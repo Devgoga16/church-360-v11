@@ -20,6 +20,7 @@ import {
 } from "@shared/api";
 import { Plus, Trash2, DollarSign } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { ministriesApi, usersApi, solicitudesApi } from "@/services/api";
 
 export default function NuevaSolicitud() {
   const navigate = useNavigate();
@@ -92,19 +93,12 @@ export default function NuevaSolicitud() {
     const fetchData = async () => {
       try {
         const [ministriesRes, usersRes] = await Promise.all([
-          fetch("/api/ministries?pageSize=100"),
-          fetch("/api/users?pageSize=100"),
+          ministriesApi.getAll(),
+          usersApi.getAll(),
         ]);
 
-        const ministriesData = await ministriesRes.json();
-        const usersData = await usersRes.json();
-
-        if (ministriesData.success) {
-          setMinistries(ministriesData.data);
-        }
-        if (usersData.success) {
-          setUsers(usersData.data);
-        }
+        setMinistries(ministriesRes.data.data);
+        setUsers(usersRes.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
         toast({
@@ -300,17 +294,8 @@ export default function NuevaSolicitud() {
         ),
       };
 
-      const response = await fetch("/api/solicitudes", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await response.json();
-
-      if (!data.success) {
-        throw new Error(data.error || "Error al crear la solicitud");
-      }
+      const response = await solicitudesApi.create(payload);
+      const data = response.data;
 
       toast({
         title: "Éxito",
