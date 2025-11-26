@@ -195,7 +195,7 @@ export function Sidebar({
                     <span className="flex-1 text-left">{role.label}</span>
                     <ChevronDown
                       className={cn(
-                        "h-3 w-3 transition-transform duration-200 flex-shrink-0",
+                        "h-2 w-2 transition-transform duration-200 flex-shrink-0",
                         expandedRoles[role.label] ? "rotate-0" : "-rotate-90",
                       )}
                     />
