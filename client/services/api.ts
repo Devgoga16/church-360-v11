@@ -162,4 +162,26 @@ export const rolesApi = {
   delete: (id: string) => apiClient.delete(`/api/roles/${id}`),
 };
 
+/**
+ * Modules API calls
+ */
+export const modulesApi = {
+  getAll: () => apiClient.get("/api/modules"),
+  getById: (id: string) => apiClient.get(`/api/modules/${id}`),
+  create: (data: any) => apiClient.post("/api/modules", data),
+  update: (id: string, data: any) => apiClient.put(`/api/modules/${id}`, data),
+  delete: (id: string) => apiClient.delete(`/api/modules/${id}`),
+};
+
+/**
+ * Options API calls (Opciones/Acciones dentro de módulos)
+ */
+export const optionsApi = {
+  getAll: () => apiClient.get("/api/options"),
+  getById: (id: string) => apiClient.get(`/api/options/${id}`),
+  create: (data: any) => apiClient.post("/api/options", data),
+  update: (id: string, data: any) => apiClient.put(`/api/options/${id}`, data),
+  delete: (id: string) => apiClient.delete(`/api/options/${id}`),
+};
+
 export default apiClient;
