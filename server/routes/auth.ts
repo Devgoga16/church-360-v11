@@ -47,9 +47,12 @@ const mockUsers = [
 
 export const login: RequestHandler = (req, res) => {
   try {
-    const { email, password }: LoginRequest = req.body;
+    const { email, password } = req.body as LoginRequest;
+
+    console.log("Login attempt:", { email });
 
     if (!email || !password) {
+      console.log("Missing email or password");
       return res.status(400).json({
         success: false,
         error: "Email and password are required",
@@ -61,11 +64,14 @@ export const login: RequestHandler = (req, res) => {
     );
 
     if (!user) {
+      console.log("User not found or password invalid:", email);
       return res.status(401).json({
         success: false,
         error: "Invalid email or password",
       });
     }
+
+    console.log("Login successful:", { email, id: user.id });
 
     const response: ApiResponse<LoginResponse> = {
       success: true,
@@ -73,12 +79,13 @@ export const login: RequestHandler = (req, res) => {
         id: user.id,
         email: user.email,
         name: user.name,
-        roles: user.roles,
+        roles: user.roles as any,
       },
     };
 
     res.json(response);
   } catch (error) {
+    console.error("Login error:", error);
     res.status(500).json({
       success: false,
       error: "Login failed",
