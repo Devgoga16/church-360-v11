@@ -300,91 +300,115 @@ export function Sidebar({
             isCollapsed ? "px-2" : "px-4 py-8",
           )}
         >
-          {filteredRoles.map((role) => (
-            <div key={role.label} className="mb-6">
-              <button
-                onClick={() => !isCollapsed && toggleRole(role.label)}
-                disabled={isCollapsed}
-                className={cn(
-                  "w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-200",
-                  expandedRoles[role.label]
-                    ? "bg-[#042D62] text-white shadow-md shadow-[#042D62]/20"
-                    : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:shadow-sm",
-                  isCollapsed && "flex justify-center",
-                )}
-                title={isCollapsed ? role.label : undefined}
-              >
-                <role.icon className="h-5 w-5 flex-shrink-0" />
-                {!isCollapsed && (
-                  <>
-                    <span className="flex-1 text-left">{role.label}</span>
-                    <ChevronDown
-                      className={cn(
-                        "h-2 w-2 transition-transform duration-200 flex-shrink-0",
-                        expandedRoles[role.label] ? "rotate-0" : "-rotate-90",
-                      )}
-                    />
-                  </>
-                )}
-              </button>
+          {filteredRoles.map((role) => {
+            const isSingleRole = filteredRoles.length === 1;
+            const showModules =
+              isSingleRole || expandedRoles[role.label];
 
-              {!isCollapsed && expandedRoles[role.label] && (
-                <div className="mt-3 ml-1 space-y-2 border-l-2 border-slate-300 dark:border-slate-600 pl-3">
-                  {role.modules.map((module) => (
-                    <div key={module.label} className="">
-                      <button
-                        onClick={() => toggleModule(module.label)}
-                        className={cn(
-                          "w-full flex items-center gap-2 px-3 py-2 rounded-md text-xs font-medium transition-all duration-200",
-                          expandedModules[module.label]
-                            ? "bg-slate-100 dark:bg-slate-800 text-[#042D62] dark:text-blue-400"
-                            : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-700 dark:hover:text-slate-300",
-                        )}
-                      >
-                        <span className="flex-1 text-left">{module.label}</span>
+            return (
+              <div key={role.label} className={isSingleRole ? "" : "mb-6"}>
+                {!isSingleRole && (
+                  <button
+                    onClick={() => !isCollapsed && toggleRole(role.label)}
+                    disabled={isCollapsed}
+                    className={cn(
+                      "w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-200",
+                      expandedRoles[role.label]
+                        ? "bg-[#042D62] text-white shadow-md shadow-[#042D62]/20"
+                        : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:shadow-sm",
+                      isCollapsed && "flex justify-center",
+                    )}
+                    title={isCollapsed ? role.label : undefined}
+                  >
+                    <role.icon className="h-5 w-5 flex-shrink-0" />
+                    {!isCollapsed && (
+                      <>
+                        <span className="flex-1 text-left">{role.label}</span>
                         <ChevronDown
                           className={cn(
-                            "h-2.5 w-2.5 transition-transform duration-200 flex-shrink-0",
-                            expandedModules[module.label]
+                            "h-2 w-2 transition-transform duration-200 flex-shrink-0",
+                            expandedRoles[role.label]
                               ? "rotate-0"
                               : "-rotate-90",
                           )}
                         />
-                      </button>
+                      </>
+                    )}
+                  </button>
+                )}
 
-                      {expandedModules[module.label] && (
-                        <div className="mt-2 ml-2 space-y-1.5 border-l border-slate-300 dark:border-slate-600 pl-3">
-                          {module.items.map((item) => {
-                            const active = isActive(item.href);
-                            return (
-                              <Link
-                                key={item.href}
-                                to={item.href}
-                                onClick={onClose}
-                                className={cn(
-                                  "flex items-center gap-2 px-3 py-2 rounded-md text-xs transition-all duration-200 group",
-                                  active
-                                    ? "bg-[#042D62] text-white shadow-md shadow-[#042D62]/20"
-                                    : "text-slate-600 dark:text-slate-400 hover:text-[#042D62] dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:shadow-sm",
-                                )}
-                              >
-                                <span className="flex-1 text-left">
-                                  {item.label}
-                                </span>
-                                {active && (
-                                  <ChevronRight className="h-2.5 w-2.5 ml-auto flex-shrink-0" />
-                                )}
-                              </Link>
-                            );
-                          })}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+                {!isCollapsed && showModules && (
+                  <div
+                    className={cn(
+                      isSingleRole
+                        ? "space-y-2"
+                        : "mt-3 ml-1 space-y-2 border-l-2 border-slate-300 dark:border-slate-600 pl-3",
+                    )}
+                  >
+                    {role.modules.map((module) => (
+                      <div key={module.label} className="">
+                        <button
+                          onClick={() => toggleModule(module.label)}
+                          className={cn(
+                            "w-full flex items-center gap-2 px-3 py-2 rounded-md text-xs font-medium transition-all duration-200",
+                            expandedModules[module.label]
+                              ? "bg-slate-100 dark:bg-slate-800 text-[#042D62] dark:text-blue-400"
+                              : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-700 dark:hover:text-slate-300",
+                          )}
+                        >
+                          <span className="flex-1 text-left">
+                            {module.label}
+                          </span>
+                          <ChevronDown
+                            className={cn(
+                              "h-2.5 w-2.5 transition-transform duration-200 flex-shrink-0",
+                              expandedModules[module.label]
+                                ? "rotate-0"
+                                : "-rotate-90",
+                            )}
+                          />
+                        </button>
+
+                        {expandedModules[module.label] && (
+                          <div
+                            className={cn(
+                              isSingleRole
+                                ? "mt-2 ml-2 space-y-1.5 border-l border-slate-300 dark:border-slate-600 pl-3"
+                                : "mt-2 ml-2 space-y-1.5 border-l border-slate-300 dark:border-slate-600 pl-3",
+                            )}
+                          >
+                            {module.items.map((item) => {
+                              const active = isActive(item.href);
+                              return (
+                                <Link
+                                  key={item.href}
+                                  to={item.href}
+                                  onClick={onClose}
+                                  className={cn(
+                                    "flex items-center gap-2 px-3 py-2 rounded-md text-xs transition-all duration-200 group",
+                                    active
+                                      ? "bg-[#042D62] text-white shadow-md shadow-[#042D62]/20"
+                                      : "text-slate-600 dark:text-slate-400 hover:text-[#042D62] dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:shadow-sm",
+                                  )}
+                                >
+                                  <span className="flex-1 text-left">
+                                    {item.label}
+                                  </span>
+                                  {active && (
+                                    <ChevronRight className="h-2.5 w-2.5 ml-auto flex-shrink-0" />
+                                  )}
+                                </Link>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </nav>
 
         <div
