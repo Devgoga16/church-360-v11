@@ -22,18 +22,63 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/solicitudes" element={<Solicitudes />} />
-          <Route path="/solicitudes/nueva" element={<NuevaSolicitud />} />
-          <Route path="/solicitudes/:id" element={<SolicitudDetalle />} />
-          <Route path="/usuarios" element={<NotFound />} />
-          <Route path="/configuracion" element={<NotFound />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <Index />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/solicitudes"
+              element={
+                <ProtectedRoute>
+                  <Solicitudes />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/solicitudes/nueva"
+              element={
+                <ProtectedRoute>
+                  <NuevaSolicitud />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/solicitudes/:id"
+              element={
+                <ProtectedRoute>
+                  <SolicitudDetalle />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/usuarios"
+              element={
+                <ProtectedRoute>
+                  <NotFound />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/configuracion"
+              element={
+                <ProtectedRoute>
+                  <NotFound />
+                </ProtectedRoute>
+              }
+            />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
