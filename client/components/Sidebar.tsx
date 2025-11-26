@@ -96,7 +96,7 @@ export function Sidebar({
                   className={cn(
                     "w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-200",
                     expandedRoles[roleId]
-                      ? "bg-[#26629c] text-white shadow-md shadow-[#26629c]/20"
+                      ? "bg-[#042d62] text-white shadow-md shadow-[#042d62]/20"
                       : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:shadow-sm",
                     isCollapsed && "flex justify-center",
                   )}
@@ -132,8 +132,8 @@ export function Sidebar({
                             className={cn(
                               "w-full flex items-center gap-2 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-md text-xs font-medium transition-all duration-200",
                               expandedModules[moduleId]
-                                ? "bg-[#deb06d]/10 dark:bg-[#26629c]/20 text-[#26629c] dark:text-[#deb06d] border-l-2 border-[#deb06d]"
-                                : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-[#26629c] dark:hover:text-[#deb06d]",
+                                ? "bg-[#deb06d]/10 dark:bg-[#042d62]/20 text-[#042d62] dark:text-[#deb06d] border-l-2 border-[#deb06d]"
+                                : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-[#042d62] dark:hover:text-[#deb06d]",
                             )}
                           >
                             <span className="flex-1 text-left">
@@ -161,8 +161,8 @@ export function Sidebar({
                                     className={cn(
                                       "flex items-center gap-2 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-md text-xs transition-all duration-200 group",
                                       active
-                                        ? "bg-[#26629c] text-white shadow-md shadow-[#26629c]/20"
-                                        : "text-slate-600 dark:text-slate-400 hover:text-[#26629c] dark:hover:text-[#deb06d] hover:bg-slate-100 dark:hover:bg-slate-800 hover:shadow-sm",
+                                        ? "bg-[#042d62] text-white shadow-md shadow-[#042d62]/20"
+                                        : "text-slate-600 dark:text-slate-400 hover:text-[#042d62] dark:hover:text-[#deb06d] hover:bg-slate-100 dark:hover:bg-slate-800 hover:shadow-sm",
                                     )}
                                   >
                                     <span className="flex-1 text-left">
@@ -198,7 +198,7 @@ export function Sidebar({
             to="/soporte"
             onClick={onClose}
             className={cn(
-              "flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-[#042D62] dark:hover:text-blue-400 transition-colors",
+              "flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-[#042d62] dark:hover:text-blue-400 transition-colors",
               isCollapsed && "flex-col gap-1 w-full justify-center",
             )}
             title={isCollapsed ? "Soporte" : undefined}

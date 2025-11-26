@@ -88,7 +88,7 @@ export function Chatbot() {
               className={cn(
                 "max-w-xs px-4 py-2 rounded-lg",
                 message.sender === "user"
-                  ? "bg-[#26629c] text-white rounded-br-none"
+                  ? "bg-[#042d62] text-white rounded-br-none"
                   : "bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white rounded-bl-none",
               )}
             >
@@ -137,7 +137,7 @@ export function Chatbot() {
             type="submit"
             disabled={isLoading || !input.trim()}
             size="icon"
-            className="bg-[#26629c] hover:bg-[#1a4269] transition-colors"
+            className="bg-[#042d62] hover:bg-[#031d3d] transition-colors"
           >
             <Send className="h-4 w-4" />
           </Button>

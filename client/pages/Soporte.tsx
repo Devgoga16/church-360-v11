@@ -29,7 +29,7 @@ export default function Soporte() {
               className={cn(
                 "py-4 px-1 font-medium text-sm transition-colors border-b-2",
                 activeTab === "faq"
-                  ? "border-[#26629c] text-[#26629c] dark:text-[#deb06d]"
+                  ? "border-[#042d62] text-[#042d62] dark:text-[#deb06d]"
                   : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-300",
               )}
             >
@@ -44,7 +44,7 @@ export default function Soporte() {
               className={cn(
                 "py-4 px-1 font-medium text-sm transition-colors border-b-2",
                 activeTab === "chatbot"
-                  ? "border-[#26629c] text-[#26629c] dark:text-[#deb06d]"
+                  ? "border-[#042d62] text-[#042d62] dark:text-[#deb06d]"
                   : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-300",
               )}
             >

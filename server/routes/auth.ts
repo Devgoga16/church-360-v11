@@ -1,96 +1,54 @@
 import { RequestHandler } from "express";
 import { ApiResponse } from "@shared/api";
+import { externalLogin } from "../services/external-api";
 
 console.log("[Auth Module] Loaded");
 
 interface LoginRequest {
-  email: string;
+  username: string;
   password: string;
 }
 
-interface LoginResponse {
-  id: number;
-  email: string;
-  name: string;
-  roles: (string | any)[];
-}
-
-// Mock users database
-const mockUsers = [
-  {
-    id: 1,
-    email: "admin@iglesia360.com",
-    password: "password",
-    name: "Juan García",
-    roles: ["admin"],
-  },
-  {
-    id: 2,
-    email: "director@iglesia360.com",
-    password: "password",
-    name: "Carlos Director",
-    roles: ["admin", "tesorero", "pastor_general"],
-  },
-  {
-    id: 3,
-    email: "tesorero@iglesia360.com",
-    password: "password",
-    name: "María López",
-    roles: ["tesorero"],
-  },
-  {
-    id: 4,
-    email: "pastor@iglesia360.com",
-    password: "password",
-    name: "Carlos Rodríguez",
-    roles: ["pastor_general"],
-  },
-];
-
-export const login: RequestHandler = (req, res) => {
+/**
+ * Login endpoint
+ * Acts as a proxy to the external API
+ * Centralizes error handling and response transformation
+ */
+export const login: RequestHandler = async (req, res) => {
   try {
-    const { email, password } = req.body as LoginRequest;
+    const { username, password } = req.body as LoginRequest;
 
-    console.log("Login attempt:", { email });
+    console.log("[Auth] Login attempt:", { username });
 
-    if (!email || !password) {
-      console.log("Missing email or password");
+    if (!username || !password) {
+      console.log("[Auth] Missing username or password");
       return res.status(400).json({
         success: false,
-        error: "Email and password are required",
+        error: "Username and password are required",
       });
     }
 
-    const user = mockUsers.find(
-      (u) => u.email === email && u.password === password,
-    );
+    // Call external API through centralized service
+    const externalResponse = await externalLogin(username, password);
 
-    if (!user) {
-      console.log("User not found or password invalid:", email);
-      return res.status(401).json({
-        success: false,
-        error: "Invalid email or password",
-      });
-    }
+    console.log("[Auth] Login successful:", { username });
 
-    console.log("Login successful:", { email, id: user.id });
-
-    const response: ApiResponse<LoginResponse> = {
+    // Return the response from external API
+    const response: ApiResponse<any> = {
       success: true,
-      data: {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        roles: user.roles,
-      },
+      data: externalResponse,
     };
 
     return res.json(response);
   } catch (error) {
-    console.error("Login error:", error);
-    res.status(500).json({
+    console.error("[Auth] Login error:", error);
+
+    const errorMessage =
+      error instanceof Error ? error.message : "Login failed";
+
+    res.status(401).json({
       success: false,
-      error: "Login failed",
+      error: errorMessage,
     });
   }
 };

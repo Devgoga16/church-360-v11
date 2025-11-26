@@ -5,6 +5,7 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
+import { authApi } from "@/services/api";
 
 export interface Permission {
   rol: {
@@ -108,30 +109,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (username: string, password: string) => {
     setIsLoading(true);
     try {
-      const response = await fetch(
-        "https://iglesia360-api.unify-tec.com/api/auth/login",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, password }),
-        },
-      );
+      console.log("[Auth] Login attempt:", { username });
 
-      console.log("[Auth] Login response status:", response.status);
+      const response = await authApi.login(username, password);
+      const data = response.data;
 
-      if (!response.ok) {
-        console.log("[Auth] Response not OK, status:", response.status);
-        const errorData = await response.json();
-        console.log("[Auth] Error data:", errorData);
-        throw new Error(
-          errorData.error || `HTTP ${response.status}: Login failed`,
-        );
-      }
+      console.log("[Auth] Login response:", data);
 
-      const data: AuthResponse = await response.json();
-      console.log("[Auth] Login response data:", data);
-
-      if (data.success) {
+      if (data.data) {
         const authData = {
           user: data.data.user,
           permisos: data.data.permisos,
@@ -141,8 +126,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(data.data.user);
         setPermisos(data.data.permisos);
         setToken(data.data.token);
+        console.log("[Auth] Login successful");
       } else {
-        throw new Error("Login failed");
+        throw new Error("Login failed - no data returned");
       }
     } catch (error) {
       console.error("[Auth] Login error:", error);

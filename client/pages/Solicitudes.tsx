@@ -4,6 +4,7 @@ import { Layout } from "@/components/Layout";
 import { StatusBadge } from "@/components/StatusBadge";
 import { Solicitud, SolicitudStatus } from "@shared/api";
 import { Plus, Search, Filter, ChevronRight, Grid, Table } from "lucide-react";
+import { solicitudesApi } from "@/services/api";
 
 const statusOptions: Array<{ value: SolicitudStatus; label: string }> = [
   { value: SolicitudStatus.BORRADOR, label: "Borrador" },
@@ -39,17 +40,14 @@ export default function Solicitudes() {
   useEffect(() => {
     const fetchSolicitudes = async () => {
       try {
-        let url = "/api/solicitudes?pageSize=100";
+        const response = await solicitudesApi.getAll();
+        let data = response.data.data;
+
         if (selectedStatus) {
-          url += `&status=${selectedStatus}`;
+          data = data.filter((s) => s.status === selectedStatus);
         }
 
-        const response = await fetch(url);
-        const data = await response.json();
-
-        if (data.success) {
-          setSolicitudes(data.data);
-        }
+        setSolicitudes(data);
       } catch (error) {
         console.error("Error fetching solicitudes:", error);
       } finally {
@@ -261,7 +259,7 @@ export default function Solicitudes() {
                         window.location.href = `/solicitudes/${solicitud.id}`;
                       }}
                     >
-                      <td className="px-3 py-2 font-medium text-[#26629c] dark:text-[#deb06d]">
+                      <td className="px-3 py-2 font-medium text-[#042d62] dark:text-[#deb06d]">
                         {solicitud.code}
                       </td>
                       <td className="px-3 py-2 text-slate-900 dark:text-white">

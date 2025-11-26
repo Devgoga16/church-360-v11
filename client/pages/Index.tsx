@@ -11,6 +11,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { solicitudesApi } from "@/services/api";
 
 export default function Index() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
@@ -21,18 +22,12 @@ export default function Index() {
     const fetchData = async () => {
       try {
         // Fetch dashboard stats
-        const statsResponse = await fetch("/api/solicitudes/dashboard/stats");
-        const statsData = await statsResponse.json();
-        if (statsData.success) {
-          setStats(statsData.data);
-        }
+        const statsResponse = await solicitudesApi.getDashboardStats();
+        setStats(statsResponse.data.data);
 
         // Fetch recent solicitudes
-        const solicitudesResponse = await fetch("/api/solicitudes?pageSize=5");
-        const solicitudesData = await solicitudesResponse.json();
-        if (solicitudesData.success) {
-          setRecentSolicitudes(solicitudesData.data);
-        }
+        const solicitudesResponse = await solicitudesApi.getAll();
+        setRecentSolicitudes(solicitudesResponse.data.data);
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
       } finally {
