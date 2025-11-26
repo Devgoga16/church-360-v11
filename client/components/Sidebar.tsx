@@ -298,7 +298,7 @@ export function Sidebar({
         <nav
           className={cn(
             "flex-1 overflow-y-auto",
-            isCollapsed ? "px-2 py-8" : "px-4 py-8",
+            isCollapsed ? "px-2 py-6" : "px-3 sm:px-4 py-6 sm:py-8",
           )}
         >
           {filteredRoles.map((role) => {
