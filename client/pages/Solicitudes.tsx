@@ -261,7 +261,7 @@ export default function Solicitudes() {
                         window.location.href = `/solicitudes/${solicitud.id}`;
                       }}
                     >
-                      <td className="px-3 py-2 font-medium text-[#26629c] dark:text-[#deb06d]">
+                      <td className="px-3 py-2 font-medium text-[#042d62] dark:text-[#deb06d]">
                         {solicitud.code}
                       </td>
                       <td className="px-3 py-2 text-slate-900 dark:text-white">
