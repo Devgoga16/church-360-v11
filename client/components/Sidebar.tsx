@@ -35,6 +35,7 @@ interface ModuleItem {
 
 interface RoleItem {
   label: string;
+  id: string;
   icon: React.ComponentType<any>;
   modules: ModuleItem[];
 }
