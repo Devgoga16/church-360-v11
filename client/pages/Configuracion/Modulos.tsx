@@ -93,7 +93,7 @@ export default function Modulos() {
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [submitting, setSubmitting] = useState(false);
   const [expandedModules, setExpandedModules] = useState<Set<string>>(
-    new Set()
+    new Set(),
   );
   const [searchTerm, setSearchTerm] = useState("");
   const { toast } = useToast();
@@ -138,20 +138,21 @@ export default function Modulos() {
         module: Module;
         options: Option[];
       }
-    >
+    >,
   );
 
   // Sort modules by orden
   const sortedModules = Object.values(groupedByModule).sort(
-    (a, b) => a.module.orden - b.module.orden
+    (a, b) => a.module.orden - b.module.orden,
   );
 
   // Filter based on search
-  const filteredModules = sortedModules.filter((group) =>
-    group.module.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    group.options.some((opt) =>
-      opt.nombre.toLowerCase().includes(searchTerm.toLowerCase())
-    )
+  const filteredModules = sortedModules.filter(
+    (group) =>
+      group.module.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      group.options.some((opt) =>
+        opt.nombre.toLowerCase().includes(searchTerm.toLowerCase()),
+      ),
   );
 
   const toggleModuleExpanded = (moduleId: string) => {
@@ -192,7 +193,7 @@ export default function Modulos() {
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value, type } = e.target as HTMLInputElement;
     setFormData((prev) => ({
@@ -282,11 +283,7 @@ export default function Modulos() {
   };
 
   const handleDelete = async (id: string) => {
-    if (
-      !window.confirm(
-        "¿Estás seguro de que deseas eliminar esta opción?"
-      )
-    ) {
+    if (!window.confirm("¿Estás seguro de que deseas eliminar esta opción?")) {
       return;
     }
 
@@ -382,7 +379,8 @@ export default function Modulos() {
                     </div>
                   </div>
                   <span className="text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2 py-1 rounded flex-shrink-0">
-                    {group.options.length} opción{group.options.length !== 1 ? "es" : ""}
+                    {group.options.length} opción
+                    {group.options.length !== 1 ? "es" : ""}
                   </span>
                 </button>
 
@@ -511,15 +509,21 @@ export default function Modulos() {
               {/* Módulo */}
               <div className="space-y-2">
                 <Label htmlFor="moduleId">Módulo *</Label>
-                <Select value={formData.moduleId} onValueChange={(value) =>
-                  setFormData((prev) => ({ ...prev, moduleId: value }))
-                }>
+                <Select
+                  value={formData.moduleId}
+                  onValueChange={(value) =>
+                    setFormData((prev) => ({ ...prev, moduleId: value }))
+                  }
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Selecciona un módulo" />
                   </SelectTrigger>
                   <SelectContent>
                     {sortedModules.map((group) => (
-                      <SelectItem key={group.module._id} value={group.module._id}>
+                      <SelectItem
+                        key={group.module._id}
+                        value={group.module._id}
+                      >
                         {group.module.nombre}
                       </SelectItem>
                     ))}

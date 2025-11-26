@@ -102,12 +102,13 @@ export default function Roles() {
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value, type } = e.target as HTMLInputElement;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? (e.target as HTMLInputElement).checked : value,
+      [name]:
+        type === "checkbox" ? (e.target as HTMLInputElement).checked : value,
     }));
   };
 
@@ -184,7 +185,7 @@ export default function Roles() {
   };
 
   const filteredRoles = roles.filter((role) =>
-    role.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+    role.nombre.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   if (loading) {

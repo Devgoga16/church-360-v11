@@ -21,12 +21,7 @@ async function makeRequest<T>(
   endpoint: string,
   options: ApiRequestOptions = {},
 ): Promise<T> {
-  const {
-    method = "GET",
-    headers = {},
-    body,
-    token,
-  } = options;
+  const { method = "GET", headers = {}, body, token } = options;
 
   const url = `${EXTERNAL_API_BASE_URL}${endpoint}`;
 

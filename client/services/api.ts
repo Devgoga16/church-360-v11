@@ -8,7 +8,8 @@ import { toast } from "@/hooks/use-toast";
 
 // Initialize axios instance with base URL
 const apiClient: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "https://iglesia360-api.unify-tec.com",
+  baseURL:
+    import.meta.env.VITE_API_URL || "https://iglesia360-api.unify-tec.com",
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
@@ -36,7 +37,7 @@ apiClient.interceptors.request.use(
   (error) => {
     console.error("[API] Request error:", error);
     return Promise.reject(error);
-  }
+  },
 );
 
 /**
@@ -62,7 +63,8 @@ apiClient.interceptors.response.use(
     if (status === 401) {
       // Clear auth on unauthorized
       toastTitle = "Sesión expirada";
-      toastMessage = "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.";
+      toastMessage =
+        "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.";
       localStorage.removeItem("auth");
       setTimeout(() => {
         window.location.href = "/login";
@@ -75,10 +77,12 @@ apiClient.interceptors.response.use(
       toastMessage = "El recurso solicitado no existe.";
     } else if (status === 500) {
       toastTitle = "Error del servidor";
-      toastMessage = "El servidor está experimentando problemas. Intenta de nuevo más tarde.";
+      toastMessage =
+        "El servidor está experimentando problemas. Intenta de nuevo más tarde.";
     } else if (!status) {
       toastTitle = "Error de conexión";
-      toastMessage = "No se pudo conectar con el servidor. Verifica tu conexión a internet.";
+      toastMessage =
+        "No se pudo conectar con el servidor. Verifica tu conexión a internet.";
     }
 
     toast({
@@ -88,7 +92,7 @@ apiClient.interceptors.response.use(
     });
 
     return Promise.reject(error);
-  }
+  },
 );
 
 /**
