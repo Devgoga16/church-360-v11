@@ -82,7 +82,7 @@ export function Sidebar({
           {permisos.map((permission) => {
             const roleId = permission.rol._id;
             const roleName = permission.rol.nombre;
-            const roleIcon = getIconFromFontAwesome(permission.rol.icono);
+            const RoleIcon = getIconFromFontAwesome(permission.rol.icono);
             const isSingleRoleLocal = isSingleRole;
             const showModules = isSingleRoleLocal || expandedRoles[roleId];
             const sortedModules = [...permission.modulos].sort(
@@ -104,7 +104,7 @@ export function Sidebar({
                     )}
                     title={isCollapsed ? roleName : undefined}
                   >
-                    <roleIcon className="h-5 w-5 flex-shrink-0" />
+                    <RoleIcon className="h-5 w-5 flex-shrink-0" />
                     {!isCollapsed && (
                       <>
                         <span className="flex-1 text-left">{roleName}</span>
