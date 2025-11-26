@@ -12,6 +12,7 @@ import {
 } from "@shared/api";
 import { ArrowLeft, FileText, CheckCircle, XCircle, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { solicitudesApi } from "@/services/api";
 
 export default function SolicitudDetalle() {
   const navigate = useNavigate();
@@ -31,14 +32,8 @@ export default function SolicitudDetalle() {
       }
 
       try {
-        const response = await fetch(`/api/solicitudes/${id}`);
-        const data = await response.json();
-
-        if (data.success) {
-          setSolicitud(data.data);
-        } else {
-          setError(data.error || "No se pudo cargar la solicitud");
-        }
+        const response = await solicitudesApi.getById(id);
+        setSolicitud(response.data.data);
       } catch (error) {
         console.error("Error fetching solicitud:", error);
         setError("Error al cargar la solicitud");
