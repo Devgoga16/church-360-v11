@@ -8,42 +8,83 @@ interface LoginRequest {
   password: string;
 }
 
-interface LoginResponse {
-  id: number;
-  email: string;
-  name: string;
-  roles: (string | any)[];
-}
-
-// Mock users database
+// Mock users database - matching the expected User structure
 const mockUsers = [
   {
-    id: 1,
+    _id: "1",
+    username: "admin",
     email: "admin@iglesia360.com",
-    password: "password",
-    name: "Juan García",
-    roles: ["admin"],
+    password: "admin123",
+    person: {
+      _id: "1",
+      nombres: "Juan",
+      apellidos: "García",
+      tipoDocumento: "DNI",
+      numeroDocumento: "12345678",
+      fechaNacimiento: "1990-01-01",
+      telefono: "123456789",
+      direccion: "Calle 1",
+      activo: true,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      __v: 0,
+      nombreCompleto: "Juan García",
+      id: "1",
+    },
+    roles: [
+      {
+        _id: "1",
+        nombre: "Administrador",
+        icono: "fa-shield",
+        descripcion: "Admin",
+        activo: true,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        __v: 0,
+      },
+    ],
+    intentosFallidos: 0,
+    activo: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    __v: 0,
+    ultimoAcceso: new Date().toISOString(),
   },
+];
+
+// Mock permissions/modules for demo
+const mockPermisos = [
   {
-    id: 2,
-    email: "director@iglesia360.com",
-    password: "password",
-    name: "Carlos Director",
-    roles: ["admin", "tesorero", "pastor_general"],
-  },
-  {
-    id: 3,
-    email: "tesorero@iglesia360.com",
-    password: "password",
-    name: "María López",
-    roles: ["tesorero"],
-  },
-  {
-    id: 4,
-    email: "pastor@iglesia360.com",
-    password: "password",
-    name: "Carlos Rodríguez",
-    roles: ["pastor_general"],
+    rol: {
+      _id: "1",
+      nombre: "Administrador",
+      icono: "fa-shield",
+      descripcion: "Admin",
+    },
+    modulos: [
+      {
+        module: {
+          _id: "1",
+          nombre: "Solicitudes",
+          descripcion: "Gestión de solicitudes",
+          orden: 1,
+        },
+        opciones: [
+          {
+            _id: "1",
+            nombre: "Mis Solicitudes",
+            ruta: "/solicitudes",
+            orden: 1,
+          },
+          {
+            _id: "2",
+            nombre: "Nueva Solicitud",
+            ruta: "/solicitudes/nueva",
+            orden: 2,
+          },
+        ],
+      },
+    ],
   },
 ];
 
@@ -73,15 +114,21 @@ export const login: RequestHandler = (req, res) => {
       });
     }
 
-    console.log("Login successful:", { email, id: user.id });
+    console.log("Login successful:", { email, id: user._id });
 
-    const response: ApiResponse<LoginResponse> = {
+    // Generate a simple token (in production, use JWT)
+    const token = `token_${user._id}_${Date.now()}`;
+
+    const response: ApiResponse<{
+      token: string;
+      user: typeof user;
+      permisos: typeof mockPermisos;
+    }> = {
       success: true,
       data: {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        roles: user.roles,
+        token,
+        user,
+        permisos: mockPermisos,
       },
     };
 
