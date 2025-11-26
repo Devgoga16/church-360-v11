@@ -86,16 +86,6 @@ export function Header({ onToggleSidebar }: HeaderProps) {
                     <p className="text-xs text-[#173747] dark:text-slate-500">
                       {user.email}
                     </p>
-                    <div className="flex gap-1 mt-2">
-                      {user.roles.map((role) => (
-                        <span
-                          key={role}
-                          className="inline-block px-2 py-0.5 bg-[#042D62] text-white text-xs rounded"
-                        >
-                          {role}
-                        </span>
-                      ))}
-                    </div>
                   </div>
                   <div className="p-1.5">
                     <button className="w-full flex items-center gap-2 px-2 py-1.5 text-xs rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-[#050A30] dark:text-white">
