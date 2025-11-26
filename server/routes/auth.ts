@@ -1,6 +1,8 @@
 import { RequestHandler } from "express";
 import { ApiResponse } from "@shared/api";
 
+console.log("[Auth Module] Loaded");
+
 interface LoginRequest {
   email: string;
   password: string;
