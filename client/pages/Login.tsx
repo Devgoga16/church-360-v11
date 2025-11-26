@@ -66,15 +66,15 @@ export default function Login() {
 
           <form onSubmit={handleSubmit} className="space-y-4 mb-6">
             <div>
-              <Label htmlFor="email" className="text-slate-700 font-medium">
-                Correo Electrónico
+              <Label htmlFor="username" className="text-slate-700 font-medium">
+                Usuario
               </Label>
               <Input
-                id="email"
-                type="email"
-                placeholder="tu@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                id="username"
+                type="text"
+                placeholder="tu usuario"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
                 className="mt-2"
               />
