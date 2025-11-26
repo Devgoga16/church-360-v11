@@ -48,13 +48,16 @@ export function Sidebar({
     }));
   };
 
-  const isSingleRole = permisos.length === 1;
-
-  // On first render, expand the first role if it's a single role
-  if (isSingleRole && !expandedRoles[permisos[0].rol._id]) {
-    setExpandedRoles({
-      [permisos[0].rol._id]: true,
-    });
+  // Initialize expanded state for all roles on first render
+  if (permisos.length > 0 && Object.keys(expandedRoles).length === 0) {
+    const initialExpanded = permisos.reduce(
+      (acc, perm) => {
+        acc[perm.rol._id] = true;
+        return acc;
+      },
+      {} as Record<string, boolean>
+    );
+    setExpandedRoles(initialExpanded);
   }
 
   return (
