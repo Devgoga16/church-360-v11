@@ -108,14 +108,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (username: string, password: string) => {
     setIsLoading(true);
     try {
-      const response = await fetch(
-        "https://iglesia360-api.unify-tec.com/api/auth/login",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, password }),
-        },
-      );
+      // Call the local server which acts as a proxy to the external API
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
 
       console.log("[Auth] Login response status:", response.status);
 
@@ -128,10 +126,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         );
       }
 
-      const data: AuthResponse = await response.json();
+      const data = await response.json();
       console.log("[Auth] Login response data:", data);
 
-      if (data.success) {
+      if (data.success && data.data) {
         const authData = {
           user: data.data.user,
           permisos: data.data.permisos,
