@@ -246,12 +246,17 @@ export function Sidebar({
   isCollapsed = false,
 }: SidebarProps) {
   const location = useLocation();
+  const { user } = useAuth();
   const [expandedRoles, setExpandedRoles] = useState<Record<string, boolean>>({
     Administrador: true,
   });
   const [expandedModules, setExpandedModules] = useState<
     Record<string, boolean>
   >({});
+
+  const filteredRoles = roleStructure.filter(
+    (role) => user?.roles.includes(role.label)
+  );
 
   const isActive = (href: string) => location.pathname === href;
 
