@@ -74,8 +74,8 @@ const initialFormDataOption: FormDataOption = {
   ruta: "",
   icono: "fas fa-circle",
   orden: 1,
-  moduleId: "",
-  roleIds: [],
+  module: "",
+  roles: [],
   activo: true,
 };
 
