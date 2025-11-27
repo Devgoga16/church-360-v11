@@ -12,6 +12,38 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Plus, Edit2, Trash2, X } from "lucide-react";
+import {
+  FaUser,
+  FaUserShield,
+  FaUsers,
+  FaCross,
+  FaLock,
+  FaCheck,
+  FaStar,
+  FaHeart,
+  FaCog,
+  FaUserTie,
+  FaUserGraduate,
+  FaUserMd,
+  FaUserNinja,
+  FaUserSecret,
+  FaShieldAlt,
+  FaCrown,
+  FaKey,
+  FaBan,
+  FaEye,
+  FaEyeSlash,
+  FaClipboard,
+  FaClipboardList,
+  FaUserClock,
+  FaUserCheck,
+  FaUserTimes,
+  FaUserPlus,
+  FaUserMinus,
+  FaUserEdit,
+  FaUserCog,
+  FaUserCircle,
+} from "react-icons/fa";
 import { rolesApi } from "@/services/api";
 import { useToast } from "@/hooks/use-toast";
 
