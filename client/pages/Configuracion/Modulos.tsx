@@ -517,28 +517,6 @@ export default function Modulos() {
                 />
               </div>
 
-              {/* Icono */}
-              <div className="space-y-2">
-                <Label>Icono *</Label>
-                <div className="grid grid-cols-5 gap-2">
-                  {ICON_OPTIONS.map((icon) => (
-                    <button
-                      key={icon}
-                      type="button"
-                      onClick={() => handleIconChange(icon)}
-                      className={`p-3 rounded-lg border-2 transition-all ${
-                        formData.icono === icon
-                          ? "border-[#042d62] bg-[#042d62]/10"
-                          : "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
-                      }`}
-                      title={icon}
-                    >
-                      <i className={`${icon} text-lg text-[#042d62]`}></i>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
               {/* Roles */}
               <div className="space-y-2">
                 <Label>Roles con Acceso</Label>
