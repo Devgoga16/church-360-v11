@@ -86,7 +86,6 @@ const initialFormDataModule: FormDataModule = {
   activo: true,
 };
 
-
 type DialogMode = "module" | "option" | null;
 
 export default function Modulos() {
@@ -97,8 +96,12 @@ export default function Modulos() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogMode, setDialogMode] = useState<DialogMode>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [formDataModule, setFormDataModule] = useState<FormDataModule>(initialFormDataModule);
-  const [formDataOption, setFormDataOption] = useState<FormDataOption>(initialFormDataOption);
+  const [formDataModule, setFormDataModule] = useState<FormDataModule>(
+    initialFormDataModule,
+  );
+  const [formDataOption, setFormDataOption] = useState<FormDataOption>(
+    initialFormDataOption,
+  );
   const [submitting, setSubmitting] = useState(false);
   const [expandedModules, setExpandedModules] = useState<Set<string>>(
     new Set(),
@@ -508,71 +511,76 @@ export default function Modulos() {
 
                     {/* Options Items */}
                     <div className="divide-y divide-slate-200 dark:divide-slate-700">
-                    {group.options
-                      .sort((a, b) => a.orden - b.orden)
-                      .map((option) => (
-                        <div
-                          key={option._id}
-                          className="px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors flex items-center justify-between gap-4"
-                        >
-                          <div className="flex items-center gap-3 flex-1 min-w-0">
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-slate-900 dark:text-white">
-                                {option.nombre}
-                              </p>
-                              <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
-                                {option.ruta}
-                              </p>
+                      {group.options
+                        .sort((a, b) => a.orden - b.orden)
+                        .map((option) => (
+                          <div
+                            key={option._id}
+                            className="px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors flex items-center justify-between gap-4"
+                          >
+                            <div className="flex items-center gap-3 flex-1 min-w-0">
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-medium text-slate-900 dark:text-white">
+                                  {option.nombre}
+                                </p>
+                                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
+                                  {option.ruta}
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Roles */}
+                            <div className="flex items-center gap-2 flex-shrink-0">
+                              {option.roles.length > 0 ? (
+                                <div className="flex gap-1">
+                                  {option.roles.slice(0, 2).map((role) => (
+                                    <span
+                                      key={role._id}
+                                      className="text-xs bg-[#042d62]/10 text-[#042d62] dark:bg-[#042d62]/20 dark:text-blue-300 px-2 py-1 rounded truncate max-w-[100px]"
+                                      title={role.nombre}
+                                    >
+                                      {role.nombre}
+                                    </span>
+                                  ))}
+                                  {option.roles.length > 2 && (
+                                    <span className="text-xs bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-2 py-1 rounded">
+                                      +{option.roles.length - 2}
+                                    </span>
+                                  )}
+                                </div>
+                              ) : (
+                                <span className="text-xs text-slate-400 dark:text-slate-500">
+                                  Sin roles
+                                </span>
+                              )}
+                            </div>
+
+                            {/* Actions */}
+                            <div className="flex gap-2 flex-shrink-0">
+                              <Button
+                                onClick={() =>
+                                  handleOpenDialogOption(
+                                    group.module._id,
+                                    option,
+                                  )
+                                }
+                                variant="ghost"
+                                size="sm"
+                                className="h-8 w-8 p-0"
+                              >
+                                <Edit2 className="h-3.5 w-3.5" />
+                              </Button>
+                              <Button
+                                onClick={() => handleDeleteOption(option._id)}
+                                variant="ghost"
+                                size="sm"
+                                className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/30"
+                              >
+                                <Trash2 className="h-3.5 w-3.5" />
+                              </Button>
                             </div>
                           </div>
-
-                          {/* Roles */}
-                          <div className="flex items-center gap-2 flex-shrink-0">
-                            {option.roles.length > 0 ? (
-                              <div className="flex gap-1">
-                                {option.roles.slice(0, 2).map((role) => (
-                                  <span
-                                    key={role._id}
-                                    className="text-xs bg-[#042d62]/10 text-[#042d62] dark:bg-[#042d62]/20 dark:text-blue-300 px-2 py-1 rounded truncate max-w-[100px]"
-                                    title={role.nombre}
-                                  >
-                                    {role.nombre}
-                                  </span>
-                                ))}
-                                {option.roles.length > 2 && (
-                                  <span className="text-xs bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-2 py-1 rounded">
-                                    +{option.roles.length - 2}
-                                  </span>
-                                )}
-                              </div>
-                            ) : (
-                              <span className="text-xs text-slate-400 dark:text-slate-500">
-                                Sin roles
-                              </span>
-                            )}
-                          </div>
-
-                          {/* Actions */}
-                          <div className="flex gap-2 flex-shrink-0">
-                            <Button
-                              onClick={() => handleOpenDialogOption(group.module._id, option)}
-                              variant="ghost"
-                              size="sm"
-                              className="h-8 w-8 p-0"
-                            >
-                              <Edit2 className="h-3.5 w-3.5" />
-                            </Button>
-                            <Button
-                              onClick={() => handleDeleteOption(option._id)}
-                              variant="ghost"
-                              size="sm"
-                              className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/30"
-                            >
-                              <Trash2 className="h-3.5 w-3.5" />
-                            </Button>
-                          </div>
-                        </div>
-                      ))}
+                        ))}
                     </div>
                   </div>
                 )}

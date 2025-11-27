@@ -451,7 +451,9 @@ export default function Roles() {
                       }`}
                       title={option.label}
                     >
-                      <div className="text-lg mb-1">{renderIcon(option.key)}</div>
+                      <div className="text-lg mb-1">
+                        {renderIcon(option.key)}
+                      </div>
                       <span className="text-xs text-center text-slate-600 dark:text-slate-400 line-clamp-2">
                         {option.label}
                       </span>
