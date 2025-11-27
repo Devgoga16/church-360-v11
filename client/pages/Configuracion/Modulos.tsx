@@ -429,17 +429,17 @@ export default function Modulos() {
                 className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden"
               >
                 {/* Module Header */}
-                <button
-                  onClick={() => toggleModuleExpanded(group.module._id)}
-                  className="w-full flex items-center gap-4 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
-                >
-                  <div className="flex items-center gap-3 flex-1 min-w-0">
+                <div className="flex items-center gap-4 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                  <button
+                    onClick={() => toggleModuleExpanded(group.module._id)}
+                    className="flex items-center gap-3 flex-1 min-w-0 text-left"
+                  >
                     {expandedModules.has(group.module._id) ? (
                       <ChevronDown className="h-5 w-5 flex-shrink-0 text-slate-500" />
                     ) : (
                       <ChevronRight className="h-5 w-5 flex-shrink-0 text-slate-500" />
                     )}
-                    <div className="flex-1 text-left min-w-0">
+                    <div className="flex-1 min-w-0">
                       <h3 className="font-semibold text-slate-900 dark:text-white">
                         {group.module.nombre}
                       </h3>
@@ -447,7 +447,7 @@ export default function Modulos() {
                         {group.module.descripcion}
                       </p>
                     </div>
-                  </div>
+                  </button>
                   <span className="text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2 py-1 rounded flex-shrink-0">
                     {group.options.length} opción
                     {group.options.length !== 1 ? "es" : ""}
@@ -456,8 +456,7 @@ export default function Modulos() {
                   {/* Module Actions */}
                   <div className="flex gap-2 flex-shrink-0">
                     <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
+                      onClick={() => {
                         setEditingId(group.module._id);
                         setFormDataModule({
                           nombre: group.module.nombre,
@@ -475,10 +474,7 @@ export default function Modulos() {
                       <Edit2 className="h-3.5 w-3.5" />
                     </Button>
                     <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteModule(group.module._id);
-                      }}
+                      onClick={() => handleDeleteModule(group.module._id)}
                       variant="ghost"
                       size="sm"
                       className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/30"
@@ -486,7 +482,7 @@ export default function Modulos() {
                       <Trash2 className="h-3.5 w-3.5" />
                     </Button>
                   </div>
-                </button>
+                </div>
 
                 {/* Options List */}
                 {expandedModules.has(group.module._id) && (
