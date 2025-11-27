@@ -345,9 +345,6 @@ export default function Modulos() {
                     ) : (
                       <ChevronRight className="h-5 w-5 flex-shrink-0 text-slate-500" />
                     )}
-                    <div className="w-10 h-10 rounded-lg bg-[#042d62]/10 flex items-center justify-center flex-shrink-0">
-                      <i className={`${group.module.icono} text-[#042d62]`}></i>
-                    </div>
                     <div className="flex-1 text-left min-w-0">
                       <h3 className="font-semibold text-slate-900 dark:text-white">
                         {group.module.nombre}
