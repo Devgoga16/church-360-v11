@@ -160,7 +160,6 @@ export default function Modulos() {
       setFormData({
         nombre: option.nombre,
         ruta: option.ruta,
-        icono: option.icono,
         orden: option.orden,
         moduleId: option.module._id,
         roleIds: option.roles.map((r) => r._id),
