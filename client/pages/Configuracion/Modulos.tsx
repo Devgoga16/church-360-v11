@@ -333,7 +333,29 @@ export default function Modulos() {
     }
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDeleteModule = async (id: string) => {
+    if (!window.confirm("¿Estás seguro de que deseas eliminar este módulo?")) {
+      return;
+    }
+
+    try {
+      await modulesApi.delete(id);
+      toast({
+        title: "Éxito",
+        description: "Módulo eliminado correctamente",
+      });
+      await fetchData();
+    } catch (error) {
+      console.error("Error deleting module:", error);
+      toast({
+        title: "Error",
+        description: "No se pudo eliminar el módulo",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDeleteOption = async (id: string) => {
     if (!window.confirm("¿Estás seguro de que deseas eliminar esta opción?")) {
       return;
     }
