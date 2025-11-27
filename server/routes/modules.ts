@@ -1,5 +1,10 @@
 import { RequestHandler } from "express";
-import { Module, CreateModuleRequest, UpdateModuleRequest, ApiResponse } from "@shared/api";
+import {
+  Module,
+  CreateModuleRequest,
+  UpdateModuleRequest,
+  ApiResponse,
+} from "@shared/api";
 
 // Mock data for modules
 export const mockModules: Module[] = [
@@ -66,7 +71,8 @@ export const getModule: RequestHandler = (req, res) => {
 
 export const createModule: RequestHandler = (req, res) => {
   try {
-    const { nombre, descripcion, orden, activo }: CreateModuleRequest = req.body;
+    const { nombre, descripcion, orden, activo }: CreateModuleRequest =
+      req.body;
 
     if (!nombre) {
       return res.status(400).json({
@@ -103,7 +109,8 @@ export const createModule: RequestHandler = (req, res) => {
 export const updateModule: RequestHandler = (req, res) => {
   try {
     const { id } = req.params;
-    const { nombre, descripcion, orden, activo }: UpdateModuleRequest = req.body;
+    const { nombre, descripcion, orden, activo }: UpdateModuleRequest =
+      req.body;
 
     const moduleIndex = mockModules.findIndex((m) => m._id === id);
     if (moduleIndex === -1) {

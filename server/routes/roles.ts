@@ -1,5 +1,10 @@
 import { RequestHandler } from "express";
-import { Role, CreateRoleRequest, UpdateRoleRequest, ApiResponse } from "@shared/api";
+import {
+  Role,
+  CreateRoleRequest,
+  UpdateRoleRequest,
+  ApiResponse,
+} from "@shared/api";
 
 // Mock data for roles
 export const mockRoles: Role[] = [

@@ -1,5 +1,10 @@
 import { RequestHandler } from "express";
-import { Option, CreateOptionRequest, UpdateOptionRequest, ApiResponse } from "@shared/api";
+import {
+  Option,
+  CreateOptionRequest,
+  UpdateOptionRequest,
+  ApiResponse,
+} from "@shared/api";
 import { mockModules } from "./modules";
 import { mockRoles } from "./roles";
 
@@ -49,7 +54,7 @@ export const listOptions: RequestHandler = (req, res) => {
     const optionsWithData = mockOptions.map((option) => {
       const moduleData = mockModules.find((m) => m._id === option.module);
       const rolesData = (option.roles as string[]).map(
-        (roleId) => mockRoles.find((r) => r._id === roleId) || { _id: roleId }
+        (roleId) => mockRoles.find((r) => r._id === roleId) || { _id: roleId },
       );
 
       return {
@@ -86,7 +91,7 @@ export const getOption: RequestHandler = (req, res) => {
 
     const moduleData = mockModules.find((m) => m._id === option.module);
     const rolesData = (option.roles as string[]).map(
-      (roleId) => mockRoles.find((r) => r._id === roleId) || { _id: roleId }
+      (roleId) => mockRoles.find((r) => r._id === roleId) || { _id: roleId },
     );
 
     const populatedOption = {
@@ -109,7 +114,15 @@ export const getOption: RequestHandler = (req, res) => {
 
 export const createOption: RequestHandler = (req, res) => {
   try {
-    const { nombre, ruta, icono, orden, module, roles, activo }: CreateOptionRequest = req.body;
+    const {
+      nombre,
+      ruta,
+      icono,
+      orden,
+      module,
+      roles,
+      activo,
+    }: CreateOptionRequest = req.body;
 
     if (!nombre) {
       return res.status(400).json({
@@ -169,7 +182,7 @@ export const createOption: RequestHandler = (req, res) => {
     // Populate module and roles data in response
     const moduleData = mockModules.find((m) => m._id === newOption.module);
     const rolesData = validRoles.map(
-      (roleId) => mockRoles.find((r) => r._id === roleId) || { _id: roleId }
+      (roleId) => mockRoles.find((r) => r._id === roleId) || { _id: roleId },
     );
 
     const responseData = {
@@ -193,7 +206,15 @@ export const createOption: RequestHandler = (req, res) => {
 export const updateOption: RequestHandler = (req, res) => {
   try {
     const { id } = req.params;
-    const { nombre, ruta, icono, orden, module, roles, activo }: UpdateOptionRequest = req.body;
+    const {
+      nombre,
+      ruta,
+      icono,
+      orden,
+      module,
+      roles,
+      activo,
+    }: UpdateOptionRequest = req.body;
 
     const optionIndex = mockOptions.findIndex((o) => o._id === id);
     if (optionIndex === -1) {
@@ -240,7 +261,7 @@ export const updateOption: RequestHandler = (req, res) => {
     // Populate module and roles data in response
     const moduleData = mockModules.find((m) => m._id === option.module);
     const rolesData = (option.roles as string[]).map(
-      (roleId) => mockRoles.find((r) => r._id === roleId) || { _id: roleId }
+      (roleId) => mockRoles.find((r) => r._id === roleId) || { _id: roleId },
     );
 
     const responseData = {

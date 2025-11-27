@@ -16,7 +16,9 @@ export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const getFirstOptionRoute = (permisos: Permission[] | null): string | null => {
+  const getFirstOptionRoute = (
+    permisos: Permission[] | null,
+  ): string | null => {
     if (!permisos || permisos.length === 0) return null;
 
     // Sort modules by orden
