@@ -452,6 +452,40 @@ export default function Modulos() {
                     {group.options.length} opción
                     {group.options.length !== 1 ? "es" : ""}
                   </span>
+
+                  {/* Module Actions */}
+                  <div className="flex gap-2 flex-shrink-0">
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setEditingId(group.module._id);
+                        setFormDataModule({
+                          nombre: group.module.nombre,
+                          descripcion: group.module.descripcion,
+                          orden: group.module.orden,
+                          activo: group.module.activo,
+                        });
+                        setDialogMode("module");
+                        setIsDialogOpen(true);
+                      }}
+                      variant="ghost"
+                      size="sm"
+                      className="h-8 w-8 p-0"
+                    >
+                      <Edit2 className="h-3.5 w-3.5" />
+                    </Button>
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteModule(group.module._id);
+                      }}
+                      variant="ghost"
+                      size="sm"
+                      className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/30"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </Button>
+                  </div>
                 </button>
 
                 {/* Options List */}
