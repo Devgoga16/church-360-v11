@@ -247,59 +247,89 @@ export default function Modulos() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.nombre.trim()) {
-      toast({
-        title: "Error",
-        description: "El nombre de la opción es requerido",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (!formData.ruta.trim()) {
-      toast({
-        title: "Error",
-        description: "La ruta es requerida",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (!formData.moduleId) {
-      toast({
-        title: "Error",
-        description: "Debes seleccionar un módulo",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setSubmitting(true);
-    try {
-      if (editingId) {
-        await optionsApi.update(editingId, formData);
+    if (dialogMode === "module") {
+      if (!formDataModule.nombre.trim()) {
         toast({
-          title: "Éxito",
-          description: "Opción actualizada correctamente",
+          title: "Error",
+          description: "El nombre del módulo es requerido",
+          variant: "destructive",
         });
-      } else {
-        await optionsApi.create(formData);
-        toast({
-          title: "Éxito",
-          description: "Opción creada correctamente",
-        });
+        return;
       }
-      handleCloseDialog();
-      await fetchData();
-    } catch (error) {
-      console.error("Error saving option:", error);
-      toast({
-        title: "Error",
-        description: "No se pudo guardar la opción",
-        variant: "destructive",
-      });
-    } finally {
-      setSubmitting(false);
+
+      setSubmitting(true);
+      try {
+        if (editingId) {
+          await modulesApi.update(editingId, formDataModule);
+          toast({
+            title: "Éxito",
+            description: "Módulo actualizado correctamente",
+          });
+        } else {
+          await modulesApi.create(formDataModule);
+          toast({
+            title: "Éxito",
+            description: "Módulo creado correctamente",
+          });
+        }
+        handleCloseDialog();
+        await fetchData();
+      } catch (error) {
+        console.error("Error saving module:", error);
+        toast({
+          title: "Error",
+          description: "No se pudo guardar el módulo",
+          variant: "destructive",
+        });
+      } finally {
+        setSubmitting(false);
+      }
+    } else {
+      if (!formDataOption.nombre.trim()) {
+        toast({
+          title: "Error",
+          description: "El nombre de la opción es requerido",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      if (!formDataOption.ruta.trim()) {
+        toast({
+          title: "Error",
+          description: "La ruta es requerida",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      setSubmitting(true);
+      try {
+        if (editingId) {
+          await optionsApi.update(editingId, formDataOption);
+          toast({
+            title: "Éxito",
+            description: "Opción actualizada correctamente",
+          });
+        } else {
+          await optionsApi.create(formDataOption);
+          toast({
+            title: "Éxito",
+            description: "Opción creada correctamente",
+          });
+        }
+        handleCloseDialog();
+        await fetchData();
+      } catch (error) {
+        console.error("Error saving option:", error);
+        toast({
+          title: "Error",
+          description: "No se pudo guardar la opción",
+          variant: "destructive",
+        });
+      } finally {
+        setSubmitting(false);
+      }
     }
   };
 
