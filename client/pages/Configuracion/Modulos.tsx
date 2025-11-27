@@ -193,13 +193,6 @@ export default function Modulos() {
     }));
   };
 
-  const handleIconChange = (icon: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      icono: icon,
-    }));
-  };
-
   const handleRoleToggle = (roleId: string) => {
     setFormData((prev) => ({
       ...prev,
