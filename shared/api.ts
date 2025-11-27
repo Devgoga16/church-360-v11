@@ -43,6 +43,92 @@ export enum DocumentType {
   OTRO = 'otro',
 }
 
+// ============================================================================
+// MODULE, ROLE, AND OPTION TYPES
+// ============================================================================
+
+export interface Module {
+  _id: string;
+  nombre: string;
+  descripcion: string;
+  icono: string;
+  orden: number;
+  activo: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateModuleRequest {
+  nombre: string;
+  descripcion: string;
+  orden: number;
+  activo?: boolean;
+}
+
+export interface UpdateModuleRequest {
+  nombre?: string;
+  descripcion?: string;
+  orden?: number;
+  activo?: boolean;
+}
+
+export interface Role {
+  _id: string;
+  nombre: string;
+  icono: string;
+  descripcion: string;
+  activo: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateRoleRequest {
+  nombre: string;
+  icono: string;
+  descripcion: string;
+  activo?: boolean;
+}
+
+export interface UpdateRoleRequest {
+  nombre?: string;
+  icono?: string;
+  descripcion?: string;
+  activo?: boolean;
+}
+
+export interface Option {
+  _id: string;
+  nombre: string;
+  ruta: string;
+  icono: string;
+  orden: number;
+  module: string | Module;
+  roles: string[] | Role[];
+  activo: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateOptionRequest {
+  nombre: string;
+  ruta: string;
+  icono?: string;
+  orden?: number;
+  moduleId: string;
+  roleIds: string[];
+  activo?: boolean;
+}
+
+export interface UpdateOptionRequest {
+  nombre?: string;
+  ruta?: string;
+  icono?: string;
+  orden?: number;
+  moduleId?: string;
+  roleIds?: string[];
+  activo?: boolean;
+}
+
 export enum WorkflowStep {
   APROBADO_PASTOR_RED = 'aprobado_pastor_red',
   APROBADO_ADMINISTRACION = 'aprobado_administracion',
