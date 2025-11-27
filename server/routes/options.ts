@@ -109,7 +109,7 @@ export const getOption: RequestHandler = (req, res) => {
 
 export const createOption: RequestHandler = (req, res) => {
   try {
-    const { nombre, ruta, icono, orden, moduleId, roleIds, activo }: CreateOptionRequest = req.body;
+    const { nombre, ruta, icono, orden, module, roles, activo }: CreateOptionRequest = req.body;
 
     if (!nombre) {
       return res.status(400).json({
@@ -125,14 +125,14 @@ export const createOption: RequestHandler = (req, res) => {
       });
     }
 
-    if (!moduleId) {
+    if (!module) {
       return res.status(400).json({
         success: false,
-        error: "Module ID is required",
+        error: "Module is required",
       });
     }
 
-    const moduleExists = mockModules.some((m) => m._id === moduleId);
+    const moduleExists = mockModules.some((m) => m._id === module);
     if (!moduleExists) {
       return res.status(404).json({
         success: false,
@@ -140,8 +140,8 @@ export const createOption: RequestHandler = (req, res) => {
       });
     }
 
-    const validRoleIds = roleIds || [];
-    for (const roleId of validRoleIds) {
+    const validRoles = roles || [];
+    for (const roleId of validRoles) {
       const roleExists = mockRoles.some((r) => r._id === roleId);
       if (!roleExists) {
         return res.status(404).json({
@@ -157,8 +157,8 @@ export const createOption: RequestHandler = (req, res) => {
       ruta,
       icono: icono || "fas fa-circle",
       orden: orden || 1,
-      module: moduleId,
-      roles: validRoleIds,
+      module: module,
+      roles: validRoles,
       activo: activo !== false,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
@@ -168,7 +168,7 @@ export const createOption: RequestHandler = (req, res) => {
 
     // Populate module and roles data in response
     const moduleData = mockModules.find((m) => m._id === newOption.module);
-    const rolesData = validRoleIds.map(
+    const rolesData = validRoles.map(
       (roleId) => mockRoles.find((r) => r._id === roleId) || { _id: roleId }
     );
 
