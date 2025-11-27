@@ -214,10 +214,7 @@ export default function Modulos() {
     setEditingId(null);
     setSelectedModuleId(null);
     setFormDataModule(initialFormDataModule);
-    setFormDataOption({
-      ...initialFormDataOption,
-      icono: "fas fa-circle",
-    });
+    setFormDataOption(initialFormDataOption);
   };
 
   const handleInputChange = (
