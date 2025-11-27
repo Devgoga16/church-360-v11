@@ -24,6 +24,27 @@ import {
   rejectSolicitud,
   getApprovals,
 } from "./routes/approvals";
+import {
+  listModules,
+  getModule,
+  createModule,
+  updateModule,
+  deleteModule,
+} from "./routes/modules";
+import {
+  listRoles,
+  getRole,
+  createRole,
+  updateRole,
+  deleteRole,
+} from "./routes/roles";
+import {
+  listOptions,
+  getOption,
+  createOption,
+  updateOption,
+  deleteOption,
+} from "./routes/options";
 
 export function createServer() {
   const app = express();
