@@ -504,7 +504,7 @@ export default function Modulos() {
                           {/* Actions */}
                           <div className="flex gap-2 flex-shrink-0">
                             <Button
-                              onClick={() => handleOpenDialog(option)}
+                              onClick={() => handleOpenDialogOption(group.module._id, option)}
                               variant="ghost"
                               size="sm"
                               className="h-8 w-8 p-0"
@@ -512,7 +512,7 @@ export default function Modulos() {
                               <Edit2 className="h-3.5 w-3.5" />
                             </Button>
                             <Button
-                              onClick={() => handleDelete(option._id)}
+                              onClick={() => handleDeleteOption(option._id)}
                               variant="ghost"
                               size="sm"
                               className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/30"
