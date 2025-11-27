@@ -193,7 +193,7 @@ export const createOption: RequestHandler = (req, res) => {
 export const updateOption: RequestHandler = (req, res) => {
   try {
     const { id } = req.params;
-    const { nombre, ruta, icono, orden, moduleId, roleIds, activo }: UpdateOptionRequest = req.body;
+    const { nombre, ruta, icono, orden, module, roles, activo }: UpdateOptionRequest = req.body;
 
     const optionIndex = mockOptions.findIndex((o) => o._id === id);
     if (optionIndex === -1) {
@@ -203,8 +203,8 @@ export const updateOption: RequestHandler = (req, res) => {
       });
     }
 
-    if (moduleId) {
-      const moduleExists = mockModules.some((m) => m._id === moduleId);
+    if (module) {
+      const moduleExists = mockModules.some((m) => m._id === module);
       if (!moduleExists) {
         return res.status(404).json({
           success: false,
@@ -213,8 +213,8 @@ export const updateOption: RequestHandler = (req, res) => {
       }
     }
 
-    if (roleIds) {
-      for (const roleId of roleIds) {
+    if (roles) {
+      for (const roleId of roles) {
         const roleExists = mockRoles.some((r) => r._id === roleId);
         if (!roleExists) {
           return res.status(404).json({
@@ -230,8 +230,8 @@ export const updateOption: RequestHandler = (req, res) => {
     if (ruta !== undefined) option.ruta = ruta;
     if (icono !== undefined) option.icono = icono;
     if (orden !== undefined) option.orden = orden;
-    if (moduleId !== undefined) option.module = moduleId;
-    if (roleIds !== undefined) option.roles = roleIds;
+    if (module !== undefined) option.module = module;
+    if (roles !== undefined) option.roles = roles;
     if (activo !== undefined) option.activo = activo;
     option.updatedAt = new Date().toISOString();
 
