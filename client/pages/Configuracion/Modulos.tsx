@@ -722,7 +722,7 @@ export default function Modulos() {
                         >
                           <input
                             type="checkbox"
-                            checked={formDataOption.roleIds.includes(role._id)}
+                            checked={formDataOption.roles.includes(role._id)}
                             onChange={() => handleRoleToggle(role._id)}
                             className="w-4 h-4 rounded border-slate-300 cursor-pointer"
                           />
