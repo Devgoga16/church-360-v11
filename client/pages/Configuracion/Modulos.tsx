@@ -52,7 +52,7 @@ interface Option {
   updatedAt: string;
 }
 
-interface FormData {
+interface FormDataOption {
   nombre: string;
   ruta: string;
   orden: number;
@@ -61,12 +61,26 @@ interface FormData {
   activo: boolean;
 }
 
-const initialFormData: FormData = {
+interface FormDataModule {
+  nombre: string;
+  descripcion: string;
+  orden: number;
+  activo: boolean;
+}
+
+const initialFormDataOption: FormDataOption = {
   nombre: "",
   ruta: "",
   orden: 1,
   moduleId: "",
   roleIds: [],
+  activo: true,
+};
+
+const initialFormDataModule: FormDataModule = {
+  nombre: "",
+  descripcion: "",
+  orden: 1,
   activo: true,
 };
 
