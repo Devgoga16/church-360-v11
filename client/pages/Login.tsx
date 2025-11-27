@@ -12,8 +12,33 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, permisos } = useAuth();
   const navigate = useNavigate();
+
+  const getFirstOptionRoute = (): string | null => {
+    if (!permisos || permisos.length === 0) return null;
+
+    // Sort modules by orden
+    const sortedModulos = [...permisos[0].modulos].sort((a, b) => {
+      const ordenA = a.module.orden || 0;
+      const ordenB = b.module.orden || 0;
+      return ordenA - ordenB;
+    });
+
+    // Get first module
+    const firstModule = sortedModulos[0];
+    if (!firstModule) return null;
+
+    // Get first option of the first module, sorted by orden
+    const sortedOpciones = [...firstModule.opciones].sort((a, b) => {
+      const ordenA = a.orden || 0;
+      const ordenB = b.orden || 0;
+      return ordenA - ordenB;
+    });
+
+    const firstOption = sortedOpciones[0];
+    return firstOption ? firstOption.ruta : null;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,7 +47,12 @@ export default function Login() {
 
     try {
       await login(username, password);
-      navigate("/");
+
+      // Small delay to ensure permisos are updated in context
+      setTimeout(() => {
+        const firstRoute = getFirstOptionRoute();
+        navigate(firstRoute || "/");
+      }, 100);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
     } finally {
@@ -38,7 +68,12 @@ export default function Login() {
 
     try {
       await login(testUsername, testPassword);
-      navigate("/");
+
+      // Small delay to ensure permisos are updated in context
+      setTimeout(() => {
+        const firstRoute = getFirstOptionRoute();
+        navigate(firstRoute || "/");
+      }, 100);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
     } finally {
