@@ -236,7 +236,7 @@ export default function Modulos() {
   };
 
   const handleRoleToggle = (roleId: string) => {
-    setFormData((prev) => ({
+    setFormDataOption((prev) => ({
       ...prev,
       roleIds: prev.roleIds.includes(roleId)
         ? prev.roleIds.filter((id) => id !== roleId)
