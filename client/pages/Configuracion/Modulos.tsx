@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Plus, Edit2, Trash2, ChevronDown, ChevronRight } from "lucide-react";
-import { optionsApi, rolesApi } from "@/services/api";
+import { optionsApi, rolesApi, modulesApi } from "@/services/api";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
