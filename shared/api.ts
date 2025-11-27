@@ -114,8 +114,8 @@ export interface CreateOptionRequest {
   ruta: string;
   icono?: string;
   orden?: number;
-  moduleId: string;
-  roleIds: string[];
+  module: string;
+  roles: string[];
   activo?: boolean;
 }
 
@@ -124,8 +124,8 @@ export interface UpdateOptionRequest {
   ruta?: string;
   icono?: string;
   orden?: number;
-  moduleId?: string;
-  roleIds?: string[];
+  module?: string;
+  roles?: string[];
   activo?: boolean;
 }
 
