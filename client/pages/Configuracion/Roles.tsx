@@ -138,6 +138,11 @@ const ICON_OPTIONS = [
   { key: "cross", label: "Cruz" },
 ];
 
+const renderIcon = (iconKey: string) => {
+  const IconComponent = iconMap[iconKey] || iconMap.user;
+  return <IconComponent className="text-[#042d62] text-lg" />;
+};
+
 export default function Roles() {
   const [roles, setRoles] = useState<Role[]>([]);
   const [loading, setLoading] = useState(true);
