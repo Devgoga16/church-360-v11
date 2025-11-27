@@ -438,20 +438,23 @@ export default function Roles() {
               {/* Icono */}
               <div className="space-y-2">
                 <Label>Icono *</Label>
-                <div className="grid grid-cols-5 gap-2">
-                  {ICON_OPTIONS.map((icon) => (
+                <div className="grid grid-cols-6 gap-2 max-h-48 overflow-y-auto p-2 border border-slate-200 dark:border-slate-700 rounded-lg">
+                  {ICON_OPTIONS.map((option) => (
                     <button
-                      key={icon}
+                      key={option.key}
                       type="button"
-                      onClick={() => handleIconChange(icon)}
-                      className={`p-3 rounded-lg border-2 transition-all ${
-                        formData.icono === icon
+                      onClick={() => handleIconChange(option.key)}
+                      className={`p-3 rounded-lg border-2 transition-all flex flex-col items-center justify-center ${
+                        formData.icono === option.key
                           ? "border-[#042d62] bg-[#042d62]/10"
                           : "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
                       }`}
-                      title={icon}
+                      title={option.label}
                     >
-                      <i className={`${icon} text-lg text-[#042d62]`}></i>
+                      <div className="text-lg mb-1">{renderIcon(option.key)}</div>
+                      <span className="text-xs text-center text-slate-600 dark:text-slate-400 line-clamp-2">
+                        {option.label}
+                      </span>
                     </button>
                   ))}
                 </div>
