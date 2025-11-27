@@ -334,7 +334,7 @@ export default function Modulos() {
   };
 
   const handleDeleteModule = async (id: string) => {
-    if (!window.confirm("¿Estás seguro de que deseas eliminar este módulo?")) {
+    if (!window.confirm("¿Estás seguro de que deseas eliminar este m��dulo?")) {
       return;
     }
 
@@ -456,7 +456,22 @@ export default function Modulos() {
 
                 {/* Options List */}
                 {expandedModules.has(group.module._id) && (
-                  <div className="border-t border-slate-200 dark:border-slate-700 divide-y divide-slate-200 dark:divide-slate-700">
+                  <div className="border-t border-slate-200 dark:border-slate-700">
+                    {/* Add Option Button */}
+                    <div className="px-4 py-3 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700">
+                      <Button
+                        onClick={() => handleOpenDialogOption(group.module._id)}
+                        size="sm"
+                        variant="outline"
+                        className="gap-2 w-full"
+                      >
+                        <Plus className="h-3.5 w-3.5" />
+                        Nueva Opción
+                      </Button>
+                    </div>
+
+                    {/* Options Items */}
+                    <div className="divide-y divide-slate-200 dark:divide-slate-700">
                     {group.options
                       .sort((a, b) => a.orden - b.orden)
                       .map((option) => (
@@ -522,6 +537,7 @@ export default function Modulos() {
                           </div>
                         </div>
                       ))}
+                    </div>
                   </div>
                 )}
               </div>
@@ -542,7 +558,13 @@ export default function Modulos() {
           <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>
-                {editingId ? "Editar Opción" : "Crear Nueva Opción"}
+                {dialogMode === "module"
+                  ? editingId
+                    ? "Editar Módulo"
+                    : "Crear Nuevo Módulo"
+                  : editingId
+                    ? "Editar Opción"
+                    : "Crear Nueva Opción"}
               </DialogTitle>
             </DialogHeader>
 
