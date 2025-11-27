@@ -189,6 +189,7 @@ export default function Modulos() {
       setFormDataOption({
         nombre: option.nombre,
         ruta: option.ruta,
+        icono: option.icono || "fas fa-circle",
         orden: option.orden,
         moduleId: moduleId,
         roleIds: option.roles.map((r) => r._id),
