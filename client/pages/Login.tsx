@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
+import { Permission } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,14 +16,42 @@ export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
+  const getFirstOptionRoute = (
+    permisos: Permission[] | null,
+  ): string | null => {
+    if (!permisos || permisos.length === 0) return null;
+
+    // Sort modules by orden
+    const sortedModulos = [...permisos[0].modulos].sort((a, b) => {
+      const ordenA = a.module.orden || 0;
+      const ordenB = b.module.orden || 0;
+      return ordenA - ordenB;
+    });
+
+    // Get first module
+    const firstModule = sortedModulos[0];
+    if (!firstModule) return null;
+
+    // Get first option of the first module, sorted by orden
+    const sortedOpciones = [...firstModule.opciones].sort((a, b) => {
+      const ordenA = a.orden || 0;
+      const ordenB = b.orden || 0;
+      return ordenA - ordenB;
+    });
+
+    const firstOption = sortedOpciones[0];
+    return firstOption ? firstOption.ruta : null;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
 
     try {
-      await login(username, password);
-      navigate("/");
+      const permisos = await login(username, password);
+      const firstRoute = getFirstOptionRoute(permisos);
+      navigate(firstRoute || "/");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
     } finally {
@@ -37,8 +66,9 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      await login(testUsername, testPassword);
-      navigate("/");
+      const permisos = await login(testUsername, testPassword);
+      const firstRoute = getFirstOptionRoute(permisos);
+      navigate(firstRoute || "/");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
     } finally {

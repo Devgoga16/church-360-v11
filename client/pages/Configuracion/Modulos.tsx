@@ -57,8 +57,8 @@ interface FormDataOption {
   ruta: string;
   icono: string;
   orden: number;
-  moduleId: string;
-  roleIds: string[];
+  module: string;
+  roles: string[];
   activo: boolean;
 }
 
@@ -74,8 +74,8 @@ const initialFormDataOption: FormDataOption = {
   ruta: "",
   icono: "fas fa-circle",
   orden: 1,
-  moduleId: "",
-  roleIds: [],
+  module: "",
+  roles: [],
   activo: true,
 };
 
@@ -194,15 +194,15 @@ export default function Modulos() {
         ruta: option.ruta,
         icono: option.icono || "fas fa-circle",
         orden: option.orden,
-        moduleId: moduleId,
-        roleIds: option.roles.map((r) => r._id),
+        module: moduleId,
+        roles: option.roles.map((r) => r._id),
         activo: option.activo,
       });
     } else {
       setEditingId(null);
       setFormDataOption({
         ...initialFormDataOption,
-        moduleId: moduleId,
+        module: moduleId,
       });
     }
     setIsDialogOpen(true);
@@ -214,10 +214,7 @@ export default function Modulos() {
     setEditingId(null);
     setSelectedModuleId(null);
     setFormDataModule(initialFormDataModule);
-    setFormDataOption({
-      ...initialFormDataOption,
-      icono: "fas fa-circle",
-    });
+    setFormDataOption(initialFormDataOption);
   };
 
   const handleInputChange = (
@@ -247,9 +244,9 @@ export default function Modulos() {
   const handleRoleToggle = (roleId: string) => {
     setFormDataOption((prev) => ({
       ...prev,
-      roleIds: prev.roleIds.includes(roleId)
-        ? prev.roleIds.filter((id) => id !== roleId)
-        : [...prev.roleIds, roleId],
+      roles: prev.roles.includes(roleId)
+        ? prev.roles.filter((id) => id !== roleId)
+        : [...prev.roles, roleId],
     }));
   };
 
@@ -722,7 +719,7 @@ export default function Modulos() {
                         >
                           <input
                             type="checkbox"
-                            checked={formDataOption.roleIds.includes(role._id)}
+                            checked={formDataOption.roles.includes(role._id)}
                             onChange={() => handleRoleToggle(role._id)}
                             className="w-4 h-4 rounded border-slate-300 cursor-pointer"
                           />

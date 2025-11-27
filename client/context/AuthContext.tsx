@@ -82,7 +82,7 @@ interface AuthContextType {
   permisos: Permission[] | null;
   token: string | null;
   isAuthenticated: boolean;
-  login: (username: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<Permission[] | null>;
   logout: () => void;
   isLoading: boolean;
 }
@@ -127,6 +127,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setPermisos(data.data.permisos);
         setToken(data.data.token);
         console.log("[Auth] Login successful");
+        return data.data.permisos;
       } else {
         throw new Error("Login failed - no data returned");
       }

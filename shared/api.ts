@@ -8,54 +8,140 @@
 // ============================================================================
 
 export enum UserRole {
-  ADMIN = 'admin',
-  TESORERO = 'tesorero',
-  PASTOR_GENERAL = 'pastor_general',
-  PASTOR_RED = 'pastor_red',
-  USUARIO = 'usuario',
+  ADMIN = "admin",
+  TESORERO = "tesorero",
+  PASTOR_GENERAL = "pastor_general",
+  PASTOR_RED = "pastor_red",
+  USUARIO = "usuario",
 }
 
 export enum SolicitudStatus {
-  BORRADOR = 'borrador',
-  PENDIENTE = 'pendiente',
-  EN_REVISION = 'en_revision',
-  APROBADO_PARCIAL = 'aprobado_parcial',
-  APROBADO = 'aprobado',
-  RECHAZADO = 'rechazado',
-  COMPLETADO = 'completado',
-  CANCELADO = 'cancelado',
+  BORRADOR = "borrador",
+  PENDIENTE = "pendiente",
+  EN_REVISION = "en_revision",
+  APROBADO_PARCIAL = "aprobado_parcial",
+  APROBADO = "aprobado",
+  RECHAZADO = "rechazado",
+  COMPLETADO = "completado",
+  CANCELADO = "cancelado",
 }
 
 export enum ApprovalStatus {
-  PENDIENTE = 'pendiente',
-  APROBADO = 'aprobado',
-  RECHAZADO = 'rechazado',
+  PENDIENTE = "pendiente",
+  APROBADO = "aprobado",
+  RECHAZADO = "rechazado",
 }
 
 export enum PaymentType {
-  UNO_MISMO = 'uno_mismo',
-  TERCEROS = 'terceros',
+  UNO_MISMO = "uno_mismo",
+  TERCEROS = "terceros",
 }
 
 export enum DocumentType {
-  COMPROBANTE = 'comprobante',
-  PRESUPUESTO = 'presupuesto',
-  OTRO = 'otro',
+  COMPROBANTE = "comprobante",
+  PRESUPUESTO = "presupuesto",
+  OTRO = "otro",
+}
+
+// ============================================================================
+// MODULE, ROLE, AND OPTION TYPES
+// ============================================================================
+
+export interface Module {
+  _id: string;
+  nombre: string;
+  descripcion: string;
+  icono: string;
+  orden: number;
+  activo: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateModuleRequest {
+  nombre: string;
+  descripcion: string;
+  orden: number;
+  activo?: boolean;
+}
+
+export interface UpdateModuleRequest {
+  nombre?: string;
+  descripcion?: string;
+  orden?: number;
+  activo?: boolean;
+}
+
+export interface Role {
+  _id: string;
+  nombre: string;
+  icono: string;
+  descripcion: string;
+  activo: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateRoleRequest {
+  nombre: string;
+  icono: string;
+  descripcion: string;
+  activo?: boolean;
+}
+
+export interface UpdateRoleRequest {
+  nombre?: string;
+  icono?: string;
+  descripcion?: string;
+  activo?: boolean;
+}
+
+export interface Option {
+  _id: string;
+  nombre: string;
+  ruta: string;
+  icono: string;
+  orden: number;
+  module: string | Module;
+  roles: string[] | Role[];
+  activo: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateOptionRequest {
+  nombre: string;
+  ruta: string;
+  icono?: string;
+  orden?: number;
+  module: string;
+  roles: string[];
+  activo?: boolean;
+}
+
+export interface UpdateOptionRequest {
+  nombre?: string;
+  ruta?: string;
+  icono?: string;
+  orden?: number;
+  module?: string;
+  roles?: string[];
+  activo?: boolean;
 }
 
 export enum WorkflowStep {
-  APROBADO_PASTOR_RED = 'aprobado_pastor_red',
-  APROBADO_ADMINISTRACION = 'aprobado_administracion',
-  APROBADO_PR_TITULAR = 'aprobado_pr_titular',
-  ENTREGA_DINERO = 'entrega_dinero',
-  SUBIR_COMPROBANTE = 'subir_comprobante',
+  APROBADO_PASTOR_RED = "aprobado_pastor_red",
+  APROBADO_ADMINISTRACION = "aprobado_administracion",
+  APROBADO_PR_TITULAR = "aprobado_pr_titular",
+  ENTREGA_DINERO = "entrega_dinero",
+  SUBIR_COMPROBANTE = "subir_comprobante",
 }
 
 export enum ProofOfPaymentStatus {
-  SUBIDO = 'subido',
-  PENDIENTE_VALIDAR = 'pendiente_validar',
-  VALIDADO = 'validado',
-  ERROR = 'error',
+  SUBIDO = "subido",
+  PENDIENTE_VALIDAR = "pendiente_validar",
+  VALIDADO = "validado",
+  ERROR = "error",
 }
 
 // ============================================================================
@@ -67,7 +153,7 @@ export interface User {
   email: string;
   name: string;
   phone?: string;
-  status: 'active' | 'inactive' | 'suspended';
+  status: "active" | "inactive" | "suspended";
   roles: UserRole[];
   lastLogin?: string;
   createdAt: string;
@@ -84,7 +170,7 @@ export interface CreateUserRequest {
 export interface UpdateUserRequest {
   name?: string;
   phone?: string;
-  status?: 'active' | 'inactive' | 'suspended';
+  status?: "active" | "inactive" | "suspended";
   roles?: UserRole[];
 }
 
@@ -93,7 +179,7 @@ export interface UserResponse {
   email: string;
   name: string;
   phone?: string;
-  status: 'active' | 'inactive' | 'suspended';
+  status: "active" | "inactive" | "suspended";
   roles: UserRole[];
   lastLogin?: string;
   createdAt: string;
@@ -112,7 +198,7 @@ export interface Ministry {
   responsibleUserId: number;
   budgetLimit: number;
   currency: string;
-  status: 'active' | 'inactive';
+  status: "active" | "inactive";
   createdAt: string;
   updatedAt: string;
 }
@@ -195,7 +281,7 @@ export interface CreateSolicitudRequest {
   responsibleUserId: number;
   paymentType: PaymentType;
   paymentDetail?: string;
-  items: Omit<SolicitudItem, 'id'>[];
+  items: Omit<SolicitudItem, "id">[];
   currency?: string;
 }
 
@@ -205,7 +291,7 @@ export interface UpdateSolicitudRequest {
   responsibleUserId?: number;
   paymentType?: PaymentType;
   paymentDetail?: string;
-  items?: Omit<SolicitudItem, 'id'>[];
+  items?: Omit<SolicitudItem, "id">[];
   requesterComments?: string;
 }
 
