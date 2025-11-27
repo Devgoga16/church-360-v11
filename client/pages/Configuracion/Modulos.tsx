@@ -129,16 +129,12 @@ export default function Modulos() {
   };
 
   // Group options by module
-  const groupedByModule = options.reduce(
-    (acc, option) => {
-      const moduleKey = option.module._id;
-      if (!acc[moduleKey]) {
-        acc[moduleKey] = {
-          module: option.module,
-          options: [],
-        };
-      }
-      acc[moduleKey].options.push(option);
+  const groupedByModule = modules.reduce(
+    (acc, module) => {
+      acc[module._id] = {
+        module,
+        options: options.filter((opt) => opt.module._id === module._id),
+      };
       return acc;
     },
     {} as Record<
