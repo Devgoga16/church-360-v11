@@ -371,9 +371,6 @@ export default function Modulos() {
                           className="px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors flex items-center justify-between gap-4"
                         >
                           <div className="flex items-center gap-3 flex-1 min-w-0">
-                            <div className="w-8 h-8 rounded flex items-center justify-center text-slate-400 flex-shrink-0">
-                              <i className={`${option.icono} text-sm`}></i>
-                            </div>
                             <div className="flex-1 min-w-0">
                               <p className="text-sm font-medium text-slate-900 dark:text-white">
                                 {option.nombre}
