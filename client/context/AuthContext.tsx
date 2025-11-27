@@ -127,6 +127,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setPermisos(data.data.permisos);
         setToken(data.data.token);
         console.log("[Auth] Login successful");
+        return data.data.permisos;
       } else {
         throw new Error("Login failed - no data returned");
       }
