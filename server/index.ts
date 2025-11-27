@@ -110,5 +110,35 @@ export function createServer() {
   app.post("/api/solicitudes/:solicitudId/reject", rejectSolicitud);
   app.get("/api/solicitudes/:solicitudId/approvals", getApprovals);
 
+  // ============================================================================
+  // MODULES ROUTES
+  // ============================================================================
+
+  app.get("/api/modules", listModules);
+  app.get("/api/modules/:id", getModule);
+  app.post("/api/modules", createModule);
+  app.put("/api/modules/:id", updateModule);
+  app.delete("/api/modules/:id", deleteModule);
+
+  // ============================================================================
+  // ROLES ROUTES
+  // ============================================================================
+
+  app.get("/api/roles", listRoles);
+  app.get("/api/roles/:id", getRole);
+  app.post("/api/roles", createRole);
+  app.put("/api/roles/:id", updateRole);
+  app.delete("/api/roles/:id", deleteRole);
+
+  // ============================================================================
+  // OPTIONS ROUTES
+  // ============================================================================
+
+  app.get("/api/options", listOptions);
+  app.get("/api/options/:id", getOption);
+  app.post("/api/options", createOption);
+  app.put("/api/options/:id", updateOption);
+  app.delete("/api/options/:id", deleteOption);
+
   return app;
 }
