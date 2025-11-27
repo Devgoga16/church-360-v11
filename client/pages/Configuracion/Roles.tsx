@@ -334,7 +334,7 @@ export default function Roles() {
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg bg-[#042d62]/10 flex items-center justify-center">
-                      <i className={`${role.icono} text-[#042d62]`}></i>
+                      {renderIcon(role.icono)}
                     </div>
                     <div className="flex-1">
                       <h3 className="font-semibold text-slate-900 dark:text-white">
