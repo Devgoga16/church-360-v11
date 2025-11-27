@@ -194,15 +194,15 @@ export default function Modulos() {
         ruta: option.ruta,
         icono: option.icono || "fas fa-circle",
         orden: option.orden,
-        moduleId: moduleId,
-        roleIds: option.roles.map((r) => r._id),
+        module: moduleId,
+        roles: option.roles.map((r) => r._id),
         activo: option.activo,
       });
     } else {
       setEditingId(null);
       setFormDataOption({
         ...initialFormDataOption,
-        moduleId: moduleId,
+        module: moduleId,
       });
     }
     setIsDialogOpen(true);
