@@ -12,6 +12,38 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Plus, Edit2, Trash2, X } from "lucide-react";
+import {
+  FaUser,
+  FaUserShield,
+  FaUsers,
+  FaCross,
+  FaLock,
+  FaCheck,
+  FaStar,
+  FaHeart,
+  FaCog,
+  FaUserTie,
+  FaUserGraduate,
+  FaUserMd,
+  FaUserNinja,
+  FaUserSecret,
+  FaShieldAlt,
+  FaCrown,
+  FaKey,
+  FaBan,
+  FaEye,
+  FaEyeSlash,
+  FaClipboard,
+  FaClipboardList,
+  FaUserClock,
+  FaUserCheck,
+  FaUserTimes,
+  FaUserPlus,
+  FaUserMinus,
+  FaUserEdit,
+  FaUserCog,
+  FaUserCircle,
+} from "react-icons/fa";
 import { rolesApi } from "@/services/api";
 import { useToast } from "@/hooks/use-toast";
 
@@ -35,22 +67,81 @@ interface FormData {
 
 const initialFormData: FormData = {
   nombre: "",
-  icono: "fas fa-user",
+  icono: "user",
   descripcion: "",
   activo: true,
 };
 
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  user: FaUser,
+  userShield: FaUserShield,
+  users: FaUsers,
+  cross: FaCross,
+  lock: FaLock,
+  check: FaCheck,
+  star: FaStar,
+  heart: FaHeart,
+  cog: FaCog,
+  userTie: FaUserTie,
+  userGraduate: FaUserGraduate,
+  userMd: FaUserMd,
+  userNinja: FaUserNinja,
+  userSecret: FaUserSecret,
+  shieldAlt: FaShieldAlt,
+  crown: FaCrown,
+  key: FaKey,
+  ban: FaBan,
+  eye: FaEye,
+  eyeSlash: FaEyeSlash,
+  clipboard: FaClipboard,
+  clipboardList: FaClipboardList,
+  userClock: FaUserClock,
+  userCheck: FaUserCheck,
+  userTimes: FaUserTimes,
+  userPlus: FaUserPlus,
+  userMinus: FaUserMinus,
+  userEdit: FaUserEdit,
+  userCog: FaUserCog,
+  userCircle: FaUserCircle,
+};
+
 const ICON_OPTIONS = [
-  "fas fa-user",
-  "fas fa-user-shield",
-  "fas fa-users",
-  "fas fa-cross",
-  "fas fa-lock",
-  "fas fa-check",
-  "fas fa-star",
-  "fas fa-heart",
-  "fas fa-cog",
+  { key: "user", label: "Usuario" },
+  { key: "userShield", label: "Usuario Escudo" },
+  { key: "users", label: "Usuarios" },
+  { key: "userTie", label: "Usuario Ejecutivo" },
+  { key: "userGraduate", label: "Usuario Estudiante" },
+  { key: "userMd", label: "Usuario Médico" },
+  { key: "userNinja", label: "Usuario Ninja" },
+  { key: "userSecret", label: "Usuario Secreto" },
+  { key: "userCircle", label: "Usuario Círculo" },
+  { key: "userCog", label: "Usuario Config" },
+  { key: "userEdit", label: "Usuario Editar" },
+  { key: "userPlus", label: "Usuario Agregar" },
+  { key: "userMinus", label: "Usuario Remover" },
+  { key: "userCheck", label: "Usuario Verificado" },
+  { key: "userTimes", label: "Usuario Cancelado" },
+  { key: "userClock", label: "Usuario Hora" },
+  { key: "shieldAlt", label: "Escudo" },
+  { key: "crown", label: "Corona" },
+  { key: "lock", label: "Bloqueo" },
+  { key: "key", label: "Llave" },
+  { key: "ban", label: "Prohibir" },
+  { key: "eye", label: "Ver" },
+  { key: "eyeSlash", label: "Ocultar" },
+  { key: "check", label: "Verificar" },
+  { key: "clipboard", label: "Portapapeles" },
+  { key: "clipboardList", label: "Lista" },
+  { key: "star", label: "Estrella" },
+  { key: "heart", label: "Corazón" },
+  { key: "cog", label: "Configuración" },
+  { key: "cross", label: "Cruz" },
 ];
+
+const renderIcon = (iconKey: string) => {
+  const IconComponent = iconMap[iconKey] || iconMap.user;
+  return <IconComponent className="text-[#042d62] text-lg" />;
+};
 
 export default function Roles() {
   const [roles, setRoles] = useState<Role[]>([]);
@@ -243,7 +334,7 @@ export default function Roles() {
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg bg-[#042d62]/10 flex items-center justify-center">
-                      <i className={`${role.icono} text-[#042d62]`}></i>
+                      {renderIcon(role.icono)}
                     </div>
                     <div className="flex-1">
                       <h3 className="font-semibold text-slate-900 dark:text-white">
@@ -347,20 +438,25 @@ export default function Roles() {
               {/* Icono */}
               <div className="space-y-2">
                 <Label>Icono *</Label>
-                <div className="grid grid-cols-5 gap-2">
-                  {ICON_OPTIONS.map((icon) => (
+                <div className="grid grid-cols-6 gap-2 max-h-48 overflow-y-auto p-2 border border-slate-200 dark:border-slate-700 rounded-lg">
+                  {ICON_OPTIONS.map((option) => (
                     <button
-                      key={icon}
+                      key={option.key}
                       type="button"
-                      onClick={() => handleIconChange(icon)}
-                      className={`p-3 rounded-lg border-2 transition-all ${
-                        formData.icono === icon
+                      onClick={() => handleIconChange(option.key)}
+                      className={`p-3 rounded-lg border-2 transition-all flex flex-col items-center justify-center ${
+                        formData.icono === option.key
                           ? "border-[#042d62] bg-[#042d62]/10"
                           : "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
                       }`}
-                      title={icon}
+                      title={option.label}
                     >
-                      <i className={`${icon} text-lg text-[#042d62]`}></i>
+                      <div className="text-lg mb-1">
+                        {renderIcon(option.key)}
+                      </div>
+                      <span className="text-xs text-center text-slate-600 dark:text-slate-400 line-clamp-2">
+                        {option.label}
+                      </span>
                     </button>
                   ))}
                 </div>

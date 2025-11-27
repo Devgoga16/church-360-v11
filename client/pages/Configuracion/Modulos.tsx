@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Plus, Edit2, Trash2, ChevronDown, ChevronRight } from "lucide-react";
-import { optionsApi, rolesApi } from "@/services/api";
+import { optionsApi, rolesApi, modulesApi } from "@/services/api";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
@@ -52,7 +52,7 @@ interface Option {
   updatedAt: string;
 }
 
-interface FormData {
+interface FormDataOption {
   nombre: string;
   ruta: string;
   icono: string;
@@ -62,7 +62,14 @@ interface FormData {
   activo: boolean;
 }
 
-const initialFormData: FormData = {
+interface FormDataModule {
+  nombre: string;
+  descripcion: string;
+  orden: number;
+  activo: boolean;
+}
+
+const initialFormDataOption: FormDataOption = {
   nombre: "",
   ruta: "",
   icono: "fas fa-circle",
@@ -72,30 +79,35 @@ const initialFormData: FormData = {
   activo: true,
 };
 
-const ICON_OPTIONS = [
-  "fas fa-circle",
-  "fas fa-check",
-  "fas fa-plus",
-  "fas fa-edit",
-  "fas fa-trash",
-  "fas fa-eye",
-  "fas fa-lock",
-  "fas fa-star",
-  "fas fa-heart",
-];
+const initialFormDataModule: FormDataModule = {
+  nombre: "",
+  descripcion: "",
+  orden: 1,
+  activo: true,
+};
+
+type DialogMode = "module" | "option" | null;
 
 export default function Modulos() {
+  const [modules, setModules] = useState<Module[]>([]);
   const [options, setOptions] = useState<Option[]>([]);
   const [roles, setRoles] = useState<Role[]>([]);
   const [loading, setLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [dialogMode, setDialogMode] = useState<DialogMode>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [formDataModule, setFormDataModule] = useState<FormDataModule>(
+    initialFormDataModule,
+  );
+  const [formDataOption, setFormDataOption] = useState<FormDataOption>(
+    initialFormDataOption,
+  );
   const [submitting, setSubmitting] = useState(false);
   const [expandedModules, setExpandedModules] = useState<Set<string>>(
     new Set(),
   );
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedModuleId, setSelectedModuleId] = useState<string | null>(null);
   const { toast } = useToast();
 
   // Fetch data on mount
@@ -106,10 +118,12 @@ export default function Modulos() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const [optionsRes, rolesRes] = await Promise.all([
+      const [modulesRes, optionsRes, rolesRes] = await Promise.all([
+        modulesApi.getAll(),
         optionsApi.getAll(),
         rolesApi.getAll(),
       ]);
+      setModules(modulesRes.data.data || []);
       setOptions(optionsRes.data.data || []);
       setRoles(rolesRes.data.data || []);
     } catch (error) {
@@ -120,16 +134,12 @@ export default function Modulos() {
   };
 
   // Group options by module
-  const groupedByModule = options.reduce(
-    (acc, option) => {
-      const moduleKey = option.module._id;
-      if (!acc[moduleKey]) {
-        acc[moduleKey] = {
-          module: option.module,
-          options: [],
-        };
-      }
-      acc[moduleKey].options.push(option);
+  const groupedByModule = modules.reduce(
+    (acc, module) => {
+      acc[module._id] = {
+        module,
+        options: options.filter((opt) => opt.module._id === module._id),
+      };
       return acc;
     },
     {} as Record<
@@ -167,55 +177,75 @@ export default function Modulos() {
     });
   };
 
-  const handleOpenDialog = (option?: Option) => {
+  const handleOpenDialogModule = () => {
+    setDialogMode("module");
+    setEditingId(null);
+    setFormDataModule(initialFormDataModule);
+    setIsDialogOpen(true);
+  };
+
+  const handleOpenDialogOption = (moduleId: string, option?: Option) => {
+    setDialogMode("option");
+    setSelectedModuleId(moduleId);
     if (option) {
       setEditingId(option._id);
-      setFormData({
+      setFormDataOption({
         nombre: option.nombre,
         ruta: option.ruta,
-        icono: option.icono,
+        icono: option.icono || "fas fa-circle",
         orden: option.orden,
-        moduleId: option.module._id,
+        moduleId: moduleId,
         roleIds: option.roles.map((r) => r._id),
         activo: option.activo,
       });
     } else {
       setEditingId(null);
-      setFormData(initialFormData);
+      setFormDataOption({
+        ...initialFormDataOption,
+        moduleId: moduleId,
+      });
     }
     setIsDialogOpen(true);
   };
 
   const handleCloseDialog = () => {
     setIsDialogOpen(false);
+    setDialogMode(null);
     setEditingId(null);
-    setFormData(initialFormData);
+    setSelectedModuleId(null);
+    setFormDataModule(initialFormDataModule);
+    setFormDataOption({
+      ...initialFormDataOption,
+      icono: "fas fa-circle",
+    });
   };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value, type } = e.target as HTMLInputElement;
-    setFormData((prev) => ({
-      ...prev,
-      [name]:
-        type === "checkbox"
-          ? (e.target as HTMLInputElement).checked
-          : type === "number"
-            ? parseInt(value)
-            : value,
-    }));
-  };
+    const parsedValue =
+      type === "checkbox"
+        ? (e.target as HTMLInputElement).checked
+        : type === "number"
+          ? parseInt(value)
+          : value;
 
-  const handleIconChange = (icon: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      icono: icon,
-    }));
+    if (dialogMode === "module") {
+      setFormDataModule((prev) => ({
+        ...prev,
+        [name]: parsedValue,
+      }));
+    } else {
+      setFormDataOption((prev) => ({
+        ...prev,
+        [name]: parsedValue,
+      }));
+    }
   };
 
   const handleRoleToggle = (roleId: string) => {
-    setFormData((prev) => ({
+    setFormDataOption((prev) => ({
       ...prev,
       roleIds: prev.roleIds.includes(roleId)
         ? prev.roleIds.filter((id) => id !== roleId)
@@ -226,63 +256,115 @@ export default function Modulos() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.nombre.trim()) {
-      toast({
-        title: "Error",
-        description: "El nombre de la opción es requerido",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (!formData.ruta.trim()) {
-      toast({
-        title: "Error",
-        description: "La ruta es requerida",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (!formData.moduleId) {
-      toast({
-        title: "Error",
-        description: "Debes seleccionar un módulo",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setSubmitting(true);
-    try {
-      if (editingId) {
-        await optionsApi.update(editingId, formData);
+    if (dialogMode === "module") {
+      if (!formDataModule.nombre.trim()) {
         toast({
-          title: "Éxito",
-          description: "Opción actualizada correctamente",
+          title: "Error",
+          description: "El nombre del módulo es requerido",
+          variant: "destructive",
         });
-      } else {
-        await optionsApi.create(formData);
-        toast({
-          title: "Éxito",
-          description: "Opción creada correctamente",
-        });
+        return;
       }
-      handleCloseDialog();
-      await fetchData();
-    } catch (error) {
-      console.error("Error saving option:", error);
-      toast({
-        title: "Error",
-        description: "No se pudo guardar la opción",
-        variant: "destructive",
-      });
-    } finally {
-      setSubmitting(false);
+
+      setSubmitting(true);
+      try {
+        if (editingId) {
+          await modulesApi.update(editingId, formDataModule);
+          toast({
+            title: "Éxito",
+            description: "Módulo actualizado correctamente",
+          });
+        } else {
+          await modulesApi.create(formDataModule);
+          toast({
+            title: "Éxito",
+            description: "Módulo creado correctamente",
+          });
+        }
+        handleCloseDialog();
+        await fetchData();
+      } catch (error) {
+        console.error("Error saving module:", error);
+        toast({
+          title: "Error",
+          description: "No se pudo guardar el módulo",
+          variant: "destructive",
+        });
+      } finally {
+        setSubmitting(false);
+      }
+    } else {
+      if (!formDataOption.nombre.trim()) {
+        toast({
+          title: "Error",
+          description: "El nombre de la opción es requerido",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      if (!formDataOption.ruta.trim()) {
+        toast({
+          title: "Error",
+          description: "La ruta es requerida",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      setSubmitting(true);
+      try {
+        if (editingId) {
+          await optionsApi.update(editingId, formDataOption);
+          toast({
+            title: "Éxito",
+            description: "Opción actualizada correctamente",
+          });
+        } else {
+          await optionsApi.create(formDataOption);
+          toast({
+            title: "Éxito",
+            description: "Opción creada correctamente",
+          });
+        }
+        handleCloseDialog();
+        await fetchData();
+      } catch (error) {
+        console.error("Error saving option:", error);
+        toast({
+          title: "Error",
+          description: "No se pudo guardar la opción",
+          variant: "destructive",
+        });
+      } finally {
+        setSubmitting(false);
+      }
     }
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDeleteModule = async (id: string) => {
+    if (!window.confirm("¿Estás seguro de que deseas eliminar este m��dulo?")) {
+      return;
+    }
+
+    try {
+      await modulesApi.delete(id);
+      toast({
+        title: "Éxito",
+        description: "Módulo eliminado correctamente",
+      });
+      await fetchData();
+    } catch (error) {
+      console.error("Error deleting module:", error);
+      toast({
+        title: "Error",
+        description: "No se pudo eliminar el módulo",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDeleteOption = async (id: string) => {
     if (!window.confirm("¿Estás seguro de que deseas eliminar esta opción?")) {
       return;
     }
@@ -328,11 +410,11 @@ export default function Modulos() {
             </p>
           </div>
           <Button
-            onClick={() => handleOpenDialog()}
+            onClick={handleOpenDialogModule}
             className="gap-2 bg-[#042d62] hover:bg-[#031d3d]"
           >
             <Plus className="h-4 w-4" />
-            Nueva Opción
+            Agregar Módulo
           </Button>
         </div>
 
@@ -356,20 +438,17 @@ export default function Modulos() {
                 className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden"
               >
                 {/* Module Header */}
-                <button
-                  onClick={() => toggleModuleExpanded(group.module._id)}
-                  className="w-full flex items-center gap-4 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
-                >
-                  <div className="flex items-center gap-3 flex-1 min-w-0">
+                <div className="flex items-center gap-4 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                  <button
+                    onClick={() => toggleModuleExpanded(group.module._id)}
+                    className="flex items-center gap-3 flex-1 min-w-0 text-left"
+                  >
                     {expandedModules.has(group.module._id) ? (
                       <ChevronDown className="h-5 w-5 flex-shrink-0 text-slate-500" />
                     ) : (
                       <ChevronRight className="h-5 w-5 flex-shrink-0 text-slate-500" />
                     )}
-                    <div className="w-10 h-10 rounded-lg bg-[#042d62]/10 flex items-center justify-center flex-shrink-0">
-                      <i className={`${group.module.icono} text-[#042d62]`}></i>
-                    </div>
-                    <div className="flex-1 text-left min-w-0">
+                    <div className="flex-1 min-w-0">
                       <h3 className="font-semibold text-slate-900 dark:text-white">
                         {group.module.nombre}
                       </h3>
@@ -377,84 +456,132 @@ export default function Modulos() {
                         {group.module.descripcion}
                       </p>
                     </div>
-                  </div>
+                  </button>
                   <span className="text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2 py-1 rounded flex-shrink-0">
                     {group.options.length} opción
                     {group.options.length !== 1 ? "es" : ""}
                   </span>
-                </button>
+
+                  {/* Module Actions */}
+                  <div className="flex gap-2 flex-shrink-0">
+                    <Button
+                      onClick={() => {
+                        setEditingId(group.module._id);
+                        setFormDataModule({
+                          nombre: group.module.nombre,
+                          descripcion: group.module.descripcion,
+                          orden: group.module.orden,
+                          activo: group.module.activo,
+                        });
+                        setDialogMode("module");
+                        setIsDialogOpen(true);
+                      }}
+                      variant="ghost"
+                      size="sm"
+                      className="h-8 w-8 p-0"
+                    >
+                      <Edit2 className="h-3.5 w-3.5" />
+                    </Button>
+                    <Button
+                      onClick={() => handleDeleteModule(group.module._id)}
+                      variant="ghost"
+                      size="sm"
+                      className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/30"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </Button>
+                  </div>
+                </div>
 
                 {/* Options List */}
                 {expandedModules.has(group.module._id) && (
-                  <div className="border-t border-slate-200 dark:border-slate-700 divide-y divide-slate-200 dark:divide-slate-700">
-                    {group.options
-                      .sort((a, b) => a.orden - b.orden)
-                      .map((option) => (
-                        <div
-                          key={option._id}
-                          className="px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors flex items-center justify-between gap-4"
-                        >
-                          <div className="flex items-center gap-3 flex-1 min-w-0">
-                            <div className="w-8 h-8 rounded flex items-center justify-center text-slate-400 flex-shrink-0">
-                              <i className={`${option.icono} text-sm`}></i>
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-slate-900 dark:text-white">
-                                {option.nombre}
-                              </p>
-                              <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
-                                {option.ruta}
-                              </p>
-                            </div>
-                          </div>
+                  <div className="border-t border-slate-200 dark:border-slate-700">
+                    {/* Add Option Button */}
+                    <div className="px-4 py-3 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700">
+                      <Button
+                        onClick={() => handleOpenDialogOption(group.module._id)}
+                        size="sm"
+                        variant="outline"
+                        className="gap-2 w-full"
+                      >
+                        <Plus className="h-3.5 w-3.5" />
+                        Nueva Opción
+                      </Button>
+                    </div>
 
-                          {/* Roles */}
-                          <div className="flex items-center gap-2 flex-shrink-0">
-                            {option.roles.length > 0 ? (
-                              <div className="flex gap-1">
-                                {option.roles.slice(0, 2).map((role) => (
-                                  <span
-                                    key={role._id}
-                                    className="text-xs bg-[#042d62]/10 text-[#042d62] dark:bg-[#042d62]/20 dark:text-blue-300 px-2 py-1 rounded truncate max-w-[100px]"
-                                    title={role.nombre}
-                                  >
-                                    {role.nombre}
-                                  </span>
-                                ))}
-                                {option.roles.length > 2 && (
-                                  <span className="text-xs bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-2 py-1 rounded">
-                                    +{option.roles.length - 2}
-                                  </span>
-                                )}
+                    {/* Options Items */}
+                    <div className="divide-y divide-slate-200 dark:divide-slate-700">
+                      {group.options
+                        .sort((a, b) => a.orden - b.orden)
+                        .map((option) => (
+                          <div
+                            key={option._id}
+                            className="px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors flex items-center justify-between gap-4"
+                          >
+                            <div className="flex items-center gap-3 flex-1 min-w-0">
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-medium text-slate-900 dark:text-white">
+                                  {option.nombre}
+                                </p>
+                                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
+                                  {option.ruta}
+                                </p>
                               </div>
-                            ) : (
-                              <span className="text-xs text-slate-400 dark:text-slate-500">
-                                Sin roles
-                              </span>
-                            )}
-                          </div>
+                            </div>
 
-                          {/* Actions */}
-                          <div className="flex gap-2 flex-shrink-0">
-                            <Button
-                              onClick={() => handleOpenDialog(option)}
-                              variant="ghost"
-                              size="sm"
-                              className="h-8 w-8 p-0"
-                            >
-                              <Edit2 className="h-3.5 w-3.5" />
-                            </Button>
-                            <Button
-                              onClick={() => handleDelete(option._id)}
-                              variant="ghost"
-                              size="sm"
-                              className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/30"
-                            >
-                              <Trash2 className="h-3.5 w-3.5" />
-                            </Button>
+                            {/* Roles */}
+                            <div className="flex items-center gap-2 flex-shrink-0">
+                              {option.roles.length > 0 ? (
+                                <div className="flex gap-1">
+                                  {option.roles.slice(0, 2).map((role) => (
+                                    <span
+                                      key={role._id}
+                                      className="text-xs bg-[#042d62]/10 text-[#042d62] dark:bg-[#042d62]/20 dark:text-blue-300 px-2 py-1 rounded truncate max-w-[100px]"
+                                      title={role.nombre}
+                                    >
+                                      {role.nombre}
+                                    </span>
+                                  ))}
+                                  {option.roles.length > 2 && (
+                                    <span className="text-xs bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-2 py-1 rounded">
+                                      +{option.roles.length - 2}
+                                    </span>
+                                  )}
+                                </div>
+                              ) : (
+                                <span className="text-xs text-slate-400 dark:text-slate-500">
+                                  Sin roles
+                                </span>
+                              )}
+                            </div>
+
+                            {/* Actions */}
+                            <div className="flex gap-2 flex-shrink-0">
+                              <Button
+                                onClick={() =>
+                                  handleOpenDialogOption(
+                                    group.module._id,
+                                    option,
+                                  )
+                                }
+                                variant="ghost"
+                                size="sm"
+                                className="h-8 w-8 p-0"
+                              >
+                                <Edit2 className="h-3.5 w-3.5" />
+                              </Button>
+                              <Button
+                                onClick={() => handleDeleteOption(option._id)}
+                                variant="ghost"
+                                size="sm"
+                                className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/30"
+                              >
+                                <Trash2 className="h-3.5 w-3.5" />
+                              </Button>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                    </div>
                   </div>
                 )}
               </div>
@@ -475,139 +602,159 @@ export default function Modulos() {
           <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>
-                {editingId ? "Editar Opción" : "Crear Nueva Opción"}
+                {dialogMode === "module"
+                  ? editingId
+                    ? "Editar Módulo"
+                    : "Crear Nuevo Módulo"
+                  : editingId
+                    ? "Editar Opción"
+                    : "Crear Nueva Opción"}
               </DialogTitle>
             </DialogHeader>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Nombre */}
-              <div className="space-y-2">
-                <Label htmlFor="nombre">Nombre de la Opción *</Label>
-                <Input
-                  id="nombre"
-                  name="nombre"
-                  value={formData.nombre}
-                  onChange={handleInputChange}
-                  placeholder="Ej: Ver Dashboard"
-                  required
-                />
-              </div>
+              {dialogMode === "module" ? (
+                <>
+                  {/* Module Form */}
+                  {/* Nombre */}
+                  <div className="space-y-2">
+                    <Label htmlFor="nombre">Nombre del Módulo *</Label>
+                    <Input
+                      id="nombre"
+                      name="nombre"
+                      value={formDataModule.nombre}
+                      onChange={handleInputChange}
+                      placeholder="Ej: Usuarios"
+                      required
+                    />
+                  </div>
 
-              {/* Ruta */}
-              <div className="space-y-2">
-                <Label htmlFor="ruta">Ruta *</Label>
-                <Input
-                  id="ruta"
-                  name="ruta"
-                  value={formData.ruta}
-                  onChange={handleInputChange}
-                  placeholder="Ej: /dashboard"
-                  required
-                />
-              </div>
+                  {/* Descripción */}
+                  <div className="space-y-2">
+                    <Label htmlFor="descripcion">Descripción</Label>
+                    <Input
+                      id="descripcion"
+                      name="descripcion"
+                      value={formDataModule.descripcion}
+                      onChange={handleInputChange}
+                      placeholder="Ej: Gestión de usuarios del sistema"
+                    />
+                  </div>
 
-              {/* Módulo */}
-              <div className="space-y-2">
-                <Label htmlFor="moduleId">Módulo *</Label>
-                <Select
-                  value={formData.moduleId}
-                  onValueChange={(value) =>
-                    setFormData((prev) => ({ ...prev, moduleId: value }))
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecciona un módulo" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {sortedModules.map((group) => (
-                      <SelectItem
-                        key={group.module._id}
-                        value={group.module._id}
-                      >
-                        {group.module.nombre}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+                  {/* Orden */}
+                  <div className="space-y-2">
+                    <Label htmlFor="orden">Orden</Label>
+                    <Input
+                      id="orden"
+                      name="orden"
+                      type="number"
+                      value={formDataModule.orden}
+                      onChange={handleInputChange}
+                      min="1"
+                    />
+                  </div>
 
-              {/* Orden */}
-              <div className="space-y-2">
-                <Label htmlFor="orden">Orden</Label>
-                <Input
-                  id="orden"
-                  name="orden"
-                  type="number"
-                  value={formData.orden}
-                  onChange={handleInputChange}
-                  min="1"
-                />
-              </div>
+                  {/* Activo */}
+                  <div className="flex items-center gap-2 pt-2">
+                    <input
+                      type="checkbox"
+                      id="activo"
+                      name="activo"
+                      checked={formDataModule.activo}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 rounded border-slate-300 cursor-pointer"
+                    />
+                    <Label htmlFor="activo" className="cursor-pointer">
+                      Módulo Activo
+                    </Label>
+                  </div>
+                </>
+              ) : (
+                <>
+                  {/* Option Form */}
+                  {/* Nombre */}
+                  <div className="space-y-2">
+                    <Label htmlFor="nombre">Nombre de la Opción *</Label>
+                    <Input
+                      id="nombre"
+                      name="nombre"
+                      value={formDataOption.nombre}
+                      onChange={handleInputChange}
+                      placeholder="Ej: Ver Dashboard"
+                      required
+                    />
+                  </div>
 
-              {/* Icono */}
-              <div className="space-y-2">
-                <Label>Icono *</Label>
-                <div className="grid grid-cols-5 gap-2">
-                  {ICON_OPTIONS.map((icon) => (
-                    <button
-                      key={icon}
-                      type="button"
-                      onClick={() => handleIconChange(icon)}
-                      className={`p-3 rounded-lg border-2 transition-all ${
-                        formData.icono === icon
-                          ? "border-[#042d62] bg-[#042d62]/10"
-                          : "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
-                      }`}
-                      title={icon}
-                    >
-                      <i className={`${icon} text-lg text-[#042d62]`}></i>
-                    </button>
-                  ))}
-                </div>
-              </div>
+                  {/* Ruta */}
+                  <div className="space-y-2">
+                    <Label htmlFor="ruta">Ruta *</Label>
+                    <Input
+                      id="ruta"
+                      name="ruta"
+                      value={formDataOption.ruta}
+                      onChange={handleInputChange}
+                      placeholder="Ej: /dashboard"
+                      required
+                    />
+                  </div>
 
-              {/* Roles */}
-              <div className="space-y-2">
-                <Label>Roles con Acceso</Label>
-                <div className="space-y-2 max-h-40 overflow-y-auto">
-                  {roles.map((role) => (
-                    <label
-                      key={role._id}
-                      className="flex items-center gap-2 p-2 rounded hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={formData.roleIds.includes(role._id)}
-                        onChange={() => handleRoleToggle(role._id)}
-                        className="w-4 h-4 rounded border-slate-300 cursor-pointer"
-                      />
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-slate-900 dark:text-white">
-                          {role.nombre}
-                        </p>
-                        <p className="text-xs text-slate-500 dark:text-slate-400">
-                          {role.descripcion}
-                        </p>
-                      </div>
-                    </label>
-                  ))}
-                </div>
-              </div>
+                  {/* Orden */}
+                  <div className="space-y-2">
+                    <Label htmlFor="orden">Orden</Label>
+                    <Input
+                      id="orden"
+                      name="orden"
+                      type="number"
+                      value={formDataOption.orden}
+                      onChange={handleInputChange}
+                      min="1"
+                    />
+                  </div>
 
-              {/* Activo */}
-              <div className="flex items-center gap-2 pt-2">
-                <input
-                  type="checkbox"
-                  id="activo"
-                  name="activo"
-                  checked={formData.activo}
-                  onChange={handleInputChange}
-                  className="w-4 h-4 rounded border-slate-300 cursor-pointer"
-                />
-                <Label htmlFor="activo" className="cursor-pointer">
-                  Opción Activa
-                </Label>
-              </div>
+                  {/* Roles */}
+                  <div className="space-y-2">
+                    <Label>Roles con Acceso</Label>
+                    <div className="space-y-2 max-h-40 overflow-y-auto">
+                      {roles.map((role) => (
+                        <label
+                          key={role._id}
+                          className="flex items-center gap-2 p-2 rounded hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={formDataOption.roleIds.includes(role._id)}
+                            onChange={() => handleRoleToggle(role._id)}
+                            className="w-4 h-4 rounded border-slate-300 cursor-pointer"
+                          />
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-slate-900 dark:text-white">
+                              {role.nombre}
+                            </p>
+                            <p className="text-xs text-slate-500 dark:text-slate-400">
+                              {role.descripcion}
+                            </p>
+                          </div>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Activo */}
+                  <div className="flex items-center gap-2 pt-2">
+                    <input
+                      type="checkbox"
+                      id="activo"
+                      name="activo"
+                      checked={formDataOption.activo}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 rounded border-slate-300 cursor-pointer"
+                    />
+                    <Label htmlFor="activo" className="cursor-pointer">
+                      Opción Activa
+                    </Label>
+                  </div>
+                </>
+              )}
 
               <DialogFooter className="pt-4">
                 <Button
@@ -623,7 +770,11 @@ export default function Modulos() {
                   disabled={submitting}
                   className="bg-[#042d62] hover:bg-[#031d3d]"
                 >
-                  {submitting ? "Guardando..." : "Guardar Opción"}
+                  {submitting
+                    ? "Guardando..."
+                    : dialogMode === "module"
+                      ? "Guardar Módulo"
+                      : "Guardar Opción"}
                 </Button>
               </DialogFooter>
             </form>
