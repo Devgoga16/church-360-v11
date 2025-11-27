@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
+import { Permission } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,10 +13,10 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { login, permisos } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
-  const getFirstOptionRoute = (): string | null => {
+  const getFirstOptionRoute = (permisos: Permission[] | null): string | null => {
     if (!permisos || permisos.length === 0) return null;
 
     // Sort modules by orden
@@ -46,13 +47,9 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      await login(username, password);
-
-      // Small delay to ensure permisos are updated in context
-      setTimeout(() => {
-        const firstRoute = getFirstOptionRoute();
-        navigate(firstRoute || "/");
-      }, 100);
+      const permisos = await login(username, password);
+      const firstRoute = getFirstOptionRoute(permisos);
+      navigate(firstRoute || "/");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
     } finally {
@@ -67,13 +64,9 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      await login(testUsername, testPassword);
-
-      // Small delay to ensure permisos are updated in context
-      setTimeout(() => {
-        const firstRoute = getFirstOptionRoute();
-        navigate(firstRoute || "/");
-      }, 100);
+      const permisos = await login(testUsername, testPassword);
+      const firstRoute = getFirstOptionRoute(permisos);
+      navigate(firstRoute || "/");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
     } finally {
