@@ -172,28 +172,43 @@ export default function Modulos() {
     });
   };
 
-  const handleOpenDialog = (option?: Option) => {
+  const handleOpenDialogModule = () => {
+    setDialogMode("module");
+    setEditingId(null);
+    setFormDataModule(initialFormDataModule);
+    setIsDialogOpen(true);
+  };
+
+  const handleOpenDialogOption = (moduleId: string, option?: Option) => {
+    setDialogMode("option");
+    setSelectedModuleId(moduleId);
     if (option) {
       setEditingId(option._id);
-      setFormData({
+      setFormDataOption({
         nombre: option.nombre,
         ruta: option.ruta,
         orden: option.orden,
-        moduleId: option.module._id,
+        moduleId: moduleId,
         roleIds: option.roles.map((r) => r._id),
         activo: option.activo,
       });
     } else {
       setEditingId(null);
-      setFormData(initialFormData);
+      setFormDataOption({
+        ...initialFormDataOption,
+        moduleId: moduleId,
+      });
     }
     setIsDialogOpen(true);
   };
 
   const handleCloseDialog = () => {
     setIsDialogOpen(false);
+    setDialogMode(null);
     setEditingId(null);
-    setFormData(initialFormData);
+    setSelectedModuleId(null);
+    setFormDataModule(initialFormDataModule);
+    setFormDataOption(initialFormDataOption);
   };
 
   const handleInputChange = (
