@@ -569,112 +569,148 @@ export default function Modulos() {
             </DialogHeader>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Nombre */}
-              <div className="space-y-2">
-                <Label htmlFor="nombre">Nombre de la Opción *</Label>
-                <Input
-                  id="nombre"
-                  name="nombre"
-                  value={formData.nombre}
-                  onChange={handleInputChange}
-                  placeholder="Ej: Ver Dashboard"
-                  required
-                />
-              </div>
+              {dialogMode === "module" ? (
+                <>
+                  {/* Module Form */}
+                  {/* Nombre */}
+                  <div className="space-y-2">
+                    <Label htmlFor="nombre">Nombre del Módulo *</Label>
+                    <Input
+                      id="nombre"
+                      name="nombre"
+                      value={formDataModule.nombre}
+                      onChange={handleInputChange}
+                      placeholder="Ej: Usuarios"
+                      required
+                    />
+                  </div>
 
-              {/* Ruta */}
-              <div className="space-y-2">
-                <Label htmlFor="ruta">Ruta *</Label>
-                <Input
-                  id="ruta"
-                  name="ruta"
-                  value={formData.ruta}
-                  onChange={handleInputChange}
-                  placeholder="Ej: /dashboard"
-                  required
-                />
-              </div>
+                  {/* Descripción */}
+                  <div className="space-y-2">
+                    <Label htmlFor="descripcion">Descripción</Label>
+                    <Input
+                      id="descripcion"
+                      name="descripcion"
+                      value={formDataModule.descripcion}
+                      onChange={handleInputChange}
+                      placeholder="Ej: Gestión de usuarios del sistema"
+                    />
+                  </div>
 
-              {/* Módulo */}
-              <div className="space-y-2">
-                <Label htmlFor="moduleId">Módulo *</Label>
-                <Select
-                  value={formData.moduleId}
-                  onValueChange={(value) =>
-                    setFormData((prev) => ({ ...prev, moduleId: value }))
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecciona un módulo" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {sortedModules.map((group) => (
-                      <SelectItem
-                        key={group.module._id}
-                        value={group.module._id}
-                      >
-                        {group.module.nombre}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+                  {/* Orden */}
+                  <div className="space-y-2">
+                    <Label htmlFor="orden">Orden</Label>
+                    <Input
+                      id="orden"
+                      name="orden"
+                      type="number"
+                      value={formDataModule.orden}
+                      onChange={handleInputChange}
+                      min="1"
+                    />
+                  </div>
 
-              {/* Orden */}
-              <div className="space-y-2">
-                <Label htmlFor="orden">Orden</Label>
-                <Input
-                  id="orden"
-                  name="orden"
-                  type="number"
-                  value={formData.orden}
-                  onChange={handleInputChange}
-                  min="1"
-                />
-              </div>
+                  {/* Activo */}
+                  <div className="flex items-center gap-2 pt-2">
+                    <input
+                      type="checkbox"
+                      id="activo"
+                      name="activo"
+                      checked={formDataModule.activo}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 rounded border-slate-300 cursor-pointer"
+                    />
+                    <Label htmlFor="activo" className="cursor-pointer">
+                      Módulo Activo
+                    </Label>
+                  </div>
+                </>
+              ) : (
+                <>
+                  {/* Option Form */}
+                  {/* Nombre */}
+                  <div className="space-y-2">
+                    <Label htmlFor="nombre">Nombre de la Opción *</Label>
+                    <Input
+                      id="nombre"
+                      name="nombre"
+                      value={formDataOption.nombre}
+                      onChange={handleInputChange}
+                      placeholder="Ej: Ver Dashboard"
+                      required
+                    />
+                  </div>
 
-              {/* Roles */}
-              <div className="space-y-2">
-                <Label>Roles con Acceso</Label>
-                <div className="space-y-2 max-h-40 overflow-y-auto">
-                  {roles.map((role) => (
-                    <label
-                      key={role._id}
-                      className="flex items-center gap-2 p-2 rounded hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={formData.roleIds.includes(role._id)}
-                        onChange={() => handleRoleToggle(role._id)}
-                        className="w-4 h-4 rounded border-slate-300 cursor-pointer"
-                      />
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-slate-900 dark:text-white">
-                          {role.nombre}
-                        </p>
-                        <p className="text-xs text-slate-500 dark:text-slate-400">
-                          {role.descripcion}
-                        </p>
-                      </div>
-                    </label>
-                  ))}
-                </div>
-              </div>
+                  {/* Ruta */}
+                  <div className="space-y-2">
+                    <Label htmlFor="ruta">Ruta *</Label>
+                    <Input
+                      id="ruta"
+                      name="ruta"
+                      value={formDataOption.ruta}
+                      onChange={handleInputChange}
+                      placeholder="Ej: /dashboard"
+                      required
+                    />
+                  </div>
 
-              {/* Activo */}
-              <div className="flex items-center gap-2 pt-2">
-                <input
-                  type="checkbox"
-                  id="activo"
-                  name="activo"
-                  checked={formData.activo}
-                  onChange={handleInputChange}
-                  className="w-4 h-4 rounded border-slate-300 cursor-pointer"
-                />
-                <Label htmlFor="activo" className="cursor-pointer">
-                  Opción Activa
-                </Label>
-              </div>
+                  {/* Orden */}
+                  <div className="space-y-2">
+                    <Label htmlFor="orden">Orden</Label>
+                    <Input
+                      id="orden"
+                      name="orden"
+                      type="number"
+                      value={formDataOption.orden}
+                      onChange={handleInputChange}
+                      min="1"
+                    />
+                  </div>
+
+                  {/* Roles */}
+                  <div className="space-y-2">
+                    <Label>Roles con Acceso</Label>
+                    <div className="space-y-2 max-h-40 overflow-y-auto">
+                      {roles.map((role) => (
+                        <label
+                          key={role._id}
+                          className="flex items-center gap-2 p-2 rounded hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={formDataOption.roleIds.includes(role._id)}
+                            onChange={() => handleRoleToggle(role._id)}
+                            className="w-4 h-4 rounded border-slate-300 cursor-pointer"
+                          />
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-slate-900 dark:text-white">
+                              {role.nombre}
+                            </p>
+                            <p className="text-xs text-slate-500 dark:text-slate-400">
+                              {role.descripcion}
+                            </p>
+                          </div>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Activo */}
+                  <div className="flex items-center gap-2 pt-2">
+                    <input
+                      type="checkbox"
+                      id="activo"
+                      name="activo"
+                      checked={formDataOption.activo}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 rounded border-slate-300 cursor-pointer"
+                    />
+                    <Label htmlFor="activo" className="cursor-pointer">
+                      Opción Activa
+                    </Label>
+                  </div>
+                </>
+              )}
 
               <DialogFooter className="pt-4">
                 <Button
@@ -690,7 +726,11 @@ export default function Modulos() {
                   disabled={submitting}
                   className="bg-[#042d62] hover:bg-[#031d3d]"
                 >
-                  {submitting ? "Guardando..." : "Guardar Opción"}
+                  {submitting
+                    ? "Guardando..."
+                    : dialogMode === "module"
+                      ? "Guardar Módulo"
+                      : "Guardar Opción"}
                 </Button>
               </DialogFooter>
             </form>
