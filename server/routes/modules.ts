@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import { Module, CreateModuleRequest, UpdateModuleRequest, ApiResponse } from "@shared/api";
 
 // Mock data for modules
-const mockModules: Module[] = [
+export const mockModules: Module[] = [
   {
     _id: "69273c2ce265542f632062d5",
     nombre: "Dashboard",
