@@ -72,17 +72,6 @@ const initialFormData: FormData = {
   activo: true,
 };
 
-const ICON_OPTIONS = [
-  "fas fa-circle",
-  "fas fa-check",
-  "fas fa-plus",
-  "fas fa-edit",
-  "fas fa-trash",
-  "fas fa-eye",
-  "fas fa-lock",
-  "fas fa-star",
-  "fas fa-heart",
-];
 
 export default function Modulos() {
   const [options, setOptions] = useState<Option[]>([]);
