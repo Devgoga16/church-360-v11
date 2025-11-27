@@ -85,18 +85,24 @@ const initialFormDataModule: FormDataModule = {
 };
 
 
+type DialogMode = "module" | "option" | null;
+
 export default function Modulos() {
+  const [modules, setModules] = useState<Module[]>([]);
   const [options, setOptions] = useState<Option[]>([]);
   const [roles, setRoles] = useState<Role[]>([]);
   const [loading, setLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [dialogMode, setDialogMode] = useState<DialogMode>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [formDataModule, setFormDataModule] = useState<FormDataModule>(initialFormDataModule);
+  const [formDataOption, setFormDataOption] = useState<FormDataOption>(initialFormDataOption);
   const [submitting, setSubmitting] = useState(false);
   const [expandedModules, setExpandedModules] = useState<Set<string>>(
     new Set(),
   );
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedModuleId, setSelectedModuleId] = useState<string | null>(null);
   const { toast } = useToast();
 
   // Fetch data on mount
@@ -107,10 +113,12 @@ export default function Modulos() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const [optionsRes, rolesRes] = await Promise.all([
+      const [modulesRes, optionsRes, rolesRes] = await Promise.all([
+        modulesApi.getAll(),
         optionsApi.getAll(),
         rolesApi.getAll(),
       ]);
+      setModules(modulesRes.data.data || []);
       setOptions(optionsRes.data.data || []);
       setRoles(rolesRes.data.data || []);
     } catch (error) {
