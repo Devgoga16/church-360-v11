@@ -401,11 +401,11 @@ export default function Modulos() {
             </p>
           </div>
           <Button
-            onClick={() => handleOpenDialog()}
+            onClick={handleOpenDialogModule}
             className="gap-2 bg-[#042d62] hover:bg-[#031d3d]"
           >
             <Plus className="h-4 w-4" />
-            Nueva Opción
+            Agregar Módulo
           </Button>
         </div>
 
