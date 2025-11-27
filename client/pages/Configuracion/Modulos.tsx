@@ -55,7 +55,6 @@ interface Option {
 interface FormData {
   nombre: string;
   ruta: string;
-  icono: string;
   orden: number;
   moduleId: string;
   roleIds: string[];
@@ -65,7 +64,6 @@ interface FormData {
 const initialFormData: FormData = {
   nombre: "",
   ruta: "",
-  icono: "fas fa-circle",
   orden: 1,
   moduleId: "",
   roleIds: [],
