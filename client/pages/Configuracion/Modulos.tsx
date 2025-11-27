@@ -57,8 +57,8 @@ interface FormDataOption {
   ruta: string;
   icono: string;
   orden: number;
-  moduleId: string;
-  roleIds: string[];
+  module: string;
+  roles: string[];
   activo: boolean;
 }
 
