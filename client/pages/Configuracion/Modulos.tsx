@@ -215,15 +215,24 @@ export default function Modulos() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value, type } = e.target as HTMLInputElement;
-    setFormData((prev) => ({
-      ...prev,
-      [name]:
-        type === "checkbox"
-          ? (e.target as HTMLInputElement).checked
-          : type === "number"
-            ? parseInt(value)
-            : value,
-    }));
+    const parsedValue =
+      type === "checkbox"
+        ? (e.target as HTMLInputElement).checked
+        : type === "number"
+          ? parseInt(value)
+          : value;
+
+    if (dialogMode === "module") {
+      setFormDataModule((prev) => ({
+        ...prev,
+        [name]: parsedValue,
+      }));
+    } else {
+      setFormDataOption((prev) => ({
+        ...prev,
+        [name]: parsedValue,
+      }));
+    }
   };
 
   const handleRoleToggle = (roleId: string) => {
