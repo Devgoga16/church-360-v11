@@ -55,6 +55,7 @@ interface Option {
 interface FormDataOption {
   nombre: string;
   ruta: string;
+  icono: string;
   orden: number;
   moduleId: string;
   roleIds: string[];
@@ -71,6 +72,7 @@ interface FormDataModule {
 const initialFormDataOption: FormDataOption = {
   nombre: "",
   ruta: "",
+  icono: "fas fa-circle",
   orden: 1,
   moduleId: "",
   roleIds: [],
